@@ -1,10 +1,13 @@
+import Header from "./components/Header"
+import Home from "./components/Home"
 
 function App() {
 
   return (
-    <h1 className="text-red-600">
-      Hello world!
-    </h1>
+    <div>
+      <Header />
+      <Home />
+    </div>
   )
 }
 
