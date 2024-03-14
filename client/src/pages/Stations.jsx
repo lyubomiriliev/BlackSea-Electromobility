@@ -8,7 +8,7 @@ const Stations = () => {
                     <h1 className="text-2xl font-bold">Зарядни Станции</h1>
                     <div className="mt-6">
                         <div >
-                            <div className="w-full h-auto border-[2px] mt-3">
+                            <div className="w-full border-[2px] rounded-md">
                                 <img className="h-10 w-10" src={chargingStation} alt="stationIcon" />
                                 <h2>Бяла 1</h2>
                                 <p>Свободна</p>

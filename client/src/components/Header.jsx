@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom"
 import { logoBlackSea, qrCode, searchIcon } from "../assets"
+import useLogout from "../hooks/useLogout"
+
 
 const Header = () => {
+
+    const { handleLogout } = useLogout()
+
     return (
         <div className="w-full h-20 bg-white shadow-md fixed top-0 left-0">
             <div className="w-full h-full flex items-center justify-between">
@@ -16,8 +21,10 @@ const Header = () => {
                         <img className="w-52" src={logoBlackSea} alt="mainLogo" />
                     </Link>
                 </div>
-                <img className="w-14" src={qrCode} alt="QRcode" />
+                <button onClick={handleLogout}>Logout</button>
+
             </div>
+            {/* <img className="w-14" src={qrCode} alt="QRcode" /> */}
             <div className="flex justify-end">
                 <button>BG</button>
                 <button>EN</button>
