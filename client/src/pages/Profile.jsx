@@ -23,6 +23,7 @@ const Profile = () => {
                                 <input className=" border-b-[2px] bg-gray-100 px-2 py-2 mb-5" type="text" placeholder="Телефон" />
                                 <button className="bg-black text-white text-base py-3 px-8 tracking-wide rounded-md hover:bg-gray-800 duration-300">Актуализирай</button>
                             </div>
+
                             <div className="flex mx-auto py-5">
                                 <div className=" border-[1px] h-1">
                                 </div>

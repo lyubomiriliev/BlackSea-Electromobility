@@ -3,11 +3,14 @@ import { logoBlackSea, qrCode, searchIcon } from "../assets"
 
 const Header = () => {
     return (
-        <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-400">
+        <div className="w-full h-20 bg-white shadow-md fixed top-0 left-0">
             <div className="w-full h-full flex items-center justify-between">
-                <button>
-                    <img className="w-14" src={searchIcon} alt="searchIcon" />
-                </button>
+                <div className="flex items-center">
+                    <button>
+                        <img className="w-14" src={searchIcon} alt="searchIcon" />
+                    </button>
+                    <input type="text" placeholder="Търсене на станции" />
+                </div>
                 <div>
                     <Link to="/">
                         <img className="w-52" src={logoBlackSea} alt="mainLogo" />
@@ -15,7 +18,7 @@ const Header = () => {
                 </div>
                 <img className="w-14" src={qrCode} alt="QRcode" />
             </div>
-            <div className="w-full h-full flex items-center justify-end">
+            <div className="flex justify-end">
                 <button>BG</button>
                 <button>EN</button>
             </div>
