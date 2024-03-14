@@ -10,6 +10,10 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Navbar from "./components/Navbar";
+import Stations from "./pages/Stations";
+import Map from "./pages/Map";
+import Profile from "./pages/Profile";
 
 const Layout = () => {
   return (
@@ -17,6 +21,7 @@ const Layout = () => {
       <Header />
       <ScrollRestoration />
       <Outlet />
+      <Navbar />
     </div>
   );
 };
@@ -37,7 +42,19 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />
-      }
+      },
+      {
+        path: "/stations",
+        element: <Stations />
+      },
+      {
+        path: "/map",
+        element: <Map />
+      },
+      {
+        path: "/profile",
+        element: <Profile />
+      },
     ]
 
   }
