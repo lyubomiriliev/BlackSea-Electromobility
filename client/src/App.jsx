@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import Stations from "./pages/Stations";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
+import useAuthStore from "./store/authStore";
 
 const Layout = () => {
   return (
@@ -60,6 +61,8 @@ const router = createBrowserRouter([
   }
 ])
 function App() {
+
+  const authUser = useAuthStore(state => state.user)
 
   return (
     <div>

@@ -2,6 +2,9 @@ import { Link } from "react-router-dom"
 import { logoBlackSea, qrCode, searchIcon } from "../assets"
 import useLogout from "../hooks/useLogout"
 
+import { FaSearch } from "react-icons/fa";
+import { TbLogout2 } from "react-icons/tb";
+
 
 const Header = () => {
 
@@ -12,17 +15,16 @@ const Header = () => {
             <div className="w-full h-full flex items-center justify-between">
                 <div className="flex items-center">
                     <button>
-                        <img className="w-14" src={searchIcon} alt="searchIcon" />
+                        <FaSearch className="w-20 h-6 text-primary hover:text-secondary hover:scale-125 duration-300 cursor-pointer" />
                     </button>
-                    <input type="text" placeholder="Търсене на станции" />
+                    {/* <input type="text" placeholder="Търсене на станции" /> */}
                 </div>
                 <div>
                     <Link to="/">
-                        <img className="w-52" src={logoBlackSea} alt="mainLogo" />
+                        <img className="w-32 hover:scale-110" src={logoBlackSea} alt="mainLogo" />
                     </Link>
                 </div>
-                <button onClick={handleLogout}>Logout</button>
-
+                <TbLogout2 className="w-20 h-6 text-primary hover:text-secondary hover:scale-125 duration-300 cursor-pointer" onClick={handleLogout} />
             </div>
             {/* <img className="w-14" src={qrCode} alt="QRcode" /> */}
             <div className="flex justify-end">

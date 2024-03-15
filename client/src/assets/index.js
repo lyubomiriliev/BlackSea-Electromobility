@@ -6,6 +6,7 @@ import mapIcon from "../assets/mapIcon.svg";
 import profileIcon from "../assets/profileIcon.svg";
 import stationsIcon from "../assets/stationsIcon.svg";
 import chargingStation from "../assets/chargingStation.svg";
+import chargingStationSVG from "../assets/chargingStationSVG.svg";
 
 import primorsko from "../assets/primorskoLogo.svg";
 import byalaLogo from "../assets/byalaLogo.svg";
@@ -42,4 +43,5 @@ export {
   whiteSearch,
   whiteStations,
   chargingStation,
+  chargingStationSVG,
 };

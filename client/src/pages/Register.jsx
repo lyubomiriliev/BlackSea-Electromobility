@@ -35,7 +35,7 @@ const Register = () => {
                                 <input className=" border-b-[2px] bg-gray-100 px-2 py-2 mb-5" type="password" placeholder="Парола" value={inputs.password} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} />
                                 <input className=" border-b-[2px] bg-gray-100 px-2 py-2 mb-5" type="password" placeholder="Повтори парола" value={inputs.repeatPassword} onChange={(e) => setInputs({ ...inputs, repeatPassword: e.target.value })} />
                                 <input className=" border-b-[2px] bg-gray-100 px-2 py-2 mb-5" type="text" placeholder="Телефон" value={inputs.phone} onChange={(e) => setInputs({ ...inputs, phone: e.target.value })} />
-                                <button onClick={() => signup(inputs)} className="bg-black text-white text-base py-3 px-8 tracking-wide rounded-md self-center w-60 hover:bg-gray-800 duration-300">Регистрация</button>
+                                <button onClick={() => signup(inputs)} className="bg-primary text-white text-base py-3 px-8 tracking-wide rounded-md self-center w-60 hover:bg-secondary duration-300">Регистрация</button>
                             </div>
                             <div className="flex mx-auto py-5">
                                 <div className=" border-[1px] h-1">
