@@ -15,6 +15,10 @@ import dulgopolLogo from "../assets/dulgopolLogo.svg";
 import kavarnaLogo from "../assets/kavarnaLogo.svg";
 import neseburLogo from "../assets/neseburLogo.svg";
 import smartNorwayLogo from "../assets/smartNorwayLogo.svg";
+import abchoLogo from "../assets/abchoSVG.svg";
+import abchoPNG from "../assets/abchoPNG.png";
+import norwayLogo from "../assets/norwaySVG.svg";
+import okolnaSreda from "../assets/okolnaSredaSVG.svg";
 
 import whiteHome from "../assets/white/whiteHome.svg";
 import whiteMap from "../assets/white/whiteMap.svg";
@@ -44,4 +48,8 @@ export {
   whiteStations,
   chargingStation,
   chargingStationSVG,
+  abchoLogo,
+  abchoPNG,
+  norwayLogo,
+  okolnaSreda,
 };
