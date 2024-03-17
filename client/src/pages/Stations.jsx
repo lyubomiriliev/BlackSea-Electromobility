@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { chargingStationSVG } from "../assets"
 import { fetchDataByala1, fetchDataByala2, fetchDataPrimorsko1, fetchDataPrimorsko2 } from "../utils/api"
 import { useTranslation } from 'react-i18next';
+import { useStationStore } from "../store/useStationStore";
 
 
 
@@ -11,10 +12,7 @@ const Stations = () => {
 
     const { t } = useTranslation();
 
-    const [stationByala1, setStationByala1] = useState(null);
-    const [stationByala2, setStationByala2] = useState(null);
-    const [stationPrimorsko1, setStationPrimorsko1] = useState(null);
-    const [stationPrimorsko2, setStationPrimorsko2] = useState(null);
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData } = useStationStore();
 
     useEffect(() => {
         const fetchDataForStations = async () => {
@@ -22,14 +20,18 @@ const Stations = () => {
             const dataByala2 = await fetchDataByala2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '2946');
             const dataPrimorsko1 = await fetchDataPrimorsko1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3805');
             const dataPrimorsko2 = await fetchDataPrimorsko2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '4380');
-            setStationByala1(dataByala1);
-            setStationByala2(dataByala2);
-            setStationPrimorsko1(dataPrimorsko1);
-            setStationPrimorsko2(dataPrimorsko2);
+            setStationData({
+                stationByala1: dataByala1,
+                stationByala2: dataByala2,
+                stationPrimorsko1: dataPrimorsko1,
+                stationPrimorsko2: dataPrimorsko2,
+            })
         };
 
-        fetchDataForStations();
-    }, []);
+        if (!stationByala1) {
+            fetchDataForStations();
+        }
+    }, [stationByala1, setStationData]);
 
     return (
         <div className="w-full bg-white py-40 px-4">

@@ -14,7 +14,6 @@ const Profile = () => {
 
         try {
             await editProfile(inputs)
-            alert("Успешно запазване")
         } catch (error) {
             alert("Неуспешно запазване")
         }

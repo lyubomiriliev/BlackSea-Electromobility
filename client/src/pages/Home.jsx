@@ -9,6 +9,7 @@ const Home = () => {
 
     return (
         <div className="max-w-screen-2xl mx-auto py-20 flex flex-col items-center justify-center text-center">
+
             <h1 className="text-2xl font-bold mb-6">{t('home.title')}</h1>
             <h2 className="text-xl font-medium mb-6">{t('home.partners')}</h2>
             <div className="flex flex-wrap justify-center gap-4 mb-6">
