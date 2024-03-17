@@ -30,7 +30,7 @@ const Stations = () => {
 
     return (
         <div className="w-full bg-white py-40 px-4">
-            <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {stationByala1 && (
                     <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
                         <img className="w-2/3 h-auto mb-4" src={chargingStationSVG} alt="stationIcon" />
