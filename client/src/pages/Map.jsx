@@ -1,10 +1,14 @@
+import { useTranslation } from 'react-i18next';
+
 const Map = () => {
+
+    const { t } = useTranslation();
 
     return (
         <div className="max-w-screen-2xl  mx-auto py-20">
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="w-full h-full mx-auto">
-                    <h1 className="text-2xl font-bold text-center mt-5 mb-5">Карта на зарядните станции</h1>
+                    <h1 className="text-2xl font-bold text-center mt-5 mb-5">{t("map.title")}</h1>
                     <div className="overflow-hidden bg-gray-200 rounded-lg">
                         <div className="aspect-w-16 aspect-h-9">
                             <iframe

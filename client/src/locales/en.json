@@ -1,0 +1,49 @@
+{
+    "searchPlaceholder": "Search for stations",
+    "logout": "Logout",
+    "home": {
+        "title": "Black Sea Electromobility",
+        "partners": "Partners"
+    },
+
+    "login": {
+        "welcome": "Welcome!",
+        "fillData": "Fill in your data",
+        "email": "Email",
+        "password": "Password",
+        "login": "Login",
+        "forgotPassword": "Forgot password?",
+        "noProfile": "Don't have a profile? Register here"
+    },
+    "register": {
+        "create": "Registration",
+        "description": "Create an account to procceed.",
+        "name": "First name",
+        "surname": "Surname",
+        "email": "Email",
+        "password": "Password",
+        "repeatPassword": "Repeat password",
+        "phone": "Phone number",
+        "register": "Register",
+        "haveProfile": "Already have an account? Login from here"
+    },
+    "profile": {
+        "title": "Your profile",
+        "name": "First name",
+        "surname": "Surname",
+        "email": "Email",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "phone": "Phone number",
+        "submit": "Save"
+    },
+    "stations": {
+        "power": "Power 22kw",
+        "charge": "Charged Power:"
+    },
+    "map": {
+        "title": "Charging stations map"
+    }
+  }
+  
+  

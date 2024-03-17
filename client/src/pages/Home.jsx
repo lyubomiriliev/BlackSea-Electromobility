@@ -1,10 +1,16 @@
 import { abchoPNG, byalaLogo, chiflikLogo, dulgopolLogo, kavarnaLogo, neseburLogo, norwayLogo, okolnaSreda, primorsko, smartNorwayLogo } from "../assets"
 
+import { useTranslation } from 'react-i18next';
+
+
 const Home = () => {
+
+    const { t } = useTranslation();
+
     return (
         <div className="max-w-screen-2xl mx-auto py-20 flex flex-col items-center justify-center text-center">
-            <h1 className="text-2xl font-bold mb-6">Черноморска електромобилност</h1>
-            <h2 className="text-xl font-medium mb-6">Партньори:</h2>
+            <h1 className="text-2xl font-bold mb-6">{t('home.title')}</h1>
+            <h2 className="text-xl font-medium mb-6">{t('home.partners')}</h2>
             <div className="flex flex-wrap justify-center gap-4 mb-6">
                 <img className="w-24" src={primorsko} alt="primorsko" />
                 <img className="w-24" src={byalaLogo} alt="byalaLogo" />
