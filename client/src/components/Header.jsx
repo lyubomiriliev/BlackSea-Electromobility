@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FaSearch } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import i18n from "../i18n";
+import { useState } from "react";
 
 
 const Header = () => {
@@ -13,15 +14,24 @@ const Header = () => {
     const { t } = useTranslation();
     const { handleLogout } = useLogout()
 
+    const [showSearch, setShowSearch] = useState(false);
+
 
     return (
         <div className="w-full h-20 bg-white shadow-md fixed top-0 left-0 z-50">
             <div className="w-full h-full flex items-center justify-between">
                 <div className="flex items-center">
-                    <button>
+                    <button onClick={() => setShowSearch(!showSearch)}>
                         <FaSearch className="w-20 h-6 text-secondary hover:text-primary hover:scale-125 duration-300 cursor-pointer" />
                     </button>
-                    <input type="text" placeholder={t('searchPlaceholder')} />
+                    {showSearch && (
+                        <input
+                            type="text"
+                            placeholder={t('searchPlaceholder')}
+                            className="border-b-[2px] bg-gray-100 px-2 py-2 ml-2 focus:outline-none focus:border-primary"
+                        />
+                    )}
+
                 </div>
                 <div>
                     <Link to="/">

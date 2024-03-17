@@ -14,7 +14,7 @@ import Navbar from "./components/Navbar";
 import Stations from "./pages/Stations";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
-import useAuthStore from "./store/authStore";
+import AuthGuard from "./components/guards/AuthGuard";
 
 const Layout = () => {
   return (
@@ -34,19 +34,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <AuthGuard><Home /></AuthGuard>
       },
       {
         path: "/stations",
-        element: <Stations />
+        element: <AuthGuard><Stations /></AuthGuard>
       },
       {
         path: "/map",
-        element: <Map />
+        element: <AuthGuard><Map /></AuthGuard>
       },
       {
         path: "/profile",
-        element: <Profile />
+        element: <AuthGuard><Profile /></AuthGuard>
       },
     ]
 
@@ -62,7 +62,6 @@ const router = createBrowserRouter([
 ])
 function App() {
 
-  const authUser = useAuthStore(state => state.user)
 
   return (
     <div>

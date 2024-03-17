@@ -2,15 +2,15 @@
     "searchPlaceholder": "Search for stations",
     "logout": "Logout",
     "home": {
-        "title": "Black Sea Electromobility",
-        "partners": "Partners"
+        "title": "BLACK SEA ELECTROMOBILITY",
+        "partners": "PARTNERS"
     },
 
     "login": {
-        "welcome": "Welcome!",
-        "fillData": "Fill in your data",
+        "welcome": "WELCOME!",
         "email": "Email",
         "password": "Password",
+        "signedIn": "Keep me signed in",
         "login": "Login",
         "forgotPassword": "Forgot password?",
         "noProfile": "Don't have a profile? Register here"
