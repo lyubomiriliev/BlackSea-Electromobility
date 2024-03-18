@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { chargingStationSVG } from "../assets"
 import { fetchDataByala1, fetchDataByala2, fetchDataPrimorsko1, fetchDataPrimorsko2 } from "../utils/api"
 import { useTranslation } from 'react-i18next';
 import { useStationStore } from "../store/useStationStore";
-
-
-
 
 
 const Stations = () => {
@@ -16,22 +13,25 @@ const Stations = () => {
 
     useEffect(() => {
         const fetchDataForStations = async () => {
-            const dataByala1 = await fetchDataByala1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3736');
-            const dataByala2 = await fetchDataByala2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '2946');
-            const dataPrimorsko1 = await fetchDataPrimorsko1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3805');
-            const dataPrimorsko2 = await fetchDataPrimorsko2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '4380');
-            setStationData({
-                stationByala1: dataByala1,
-                stationByala2: dataByala2,
-                stationPrimorsko1: dataPrimorsko1,
-                stationPrimorsko2: dataPrimorsko2,
-            })
+            try {
+                const dataByala1 = await fetchDataByala1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3736');
+                const dataByala2 = await fetchDataByala2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '2946');
+                const dataPrimorsko1 = await fetchDataPrimorsko1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3805');
+                const dataPrimorsko2 = await fetchDataPrimorsko2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '4380');
+
+                setStationData({
+                    stationByala1: dataByala1,
+                    stationByala2: dataByala2,
+                    stationPrimorsko1: dataPrimorsko1,
+                    stationPrimorsko2: dataPrimorsko2,
+                });
+            } catch (error) {
+                console.error("Error fetching data for stations:", error);
+            }
         };
 
-        if (!stationByala1) {
-            fetchDataForStations();
-        }
-    }, [stationByala1, setStationData]);
+        fetchDataForStations();
+    }, [setStationData]);
 
     return (
         <div className="w-full bg-white py-40 px-4">

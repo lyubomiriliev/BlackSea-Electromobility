@@ -3,6 +3,7 @@ import { abchoPNG, byalaLogo, chiflikLogo, dulgopolLogo, kavarnaLogo, neseburLog
 import { useTranslation } from 'react-i18next';
 
 
+
 const Home = () => {
 
     const { t } = useTranslation();

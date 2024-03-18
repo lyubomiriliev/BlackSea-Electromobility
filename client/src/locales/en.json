@@ -27,6 +27,19 @@
         "register": "Register",
         "haveProfile": "Already have an account? Login from here"
     },
+    "registerError": {
+        "emptyName": "Name cannot be empty.",
+        "invalidName": "Names cannot contain numbers or punctuation.",
+        "surnameRequired": "Invalid surname format",
+        "emailRequired": "This field cannot be empty.",
+        "invalidEmail": "This is not a valid email.",
+        "passwordRequired": "This field cannot be empty.",
+        "passwordInvalid": "Password must be at least 6 characters long and include at least one capital letter and one special symbol.",
+        "repeatPasswordRequired": "This field cannot be empty.",
+        "passwordMismatch": "The passwords don't match.",
+        "phoneRequired": "This field cannot be empty.",
+        "phoneInvalid": "Phone numbers can only contain numbers"
+    },
     "profile": {
         "title": "Your profile",
         "name": "First name",

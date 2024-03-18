@@ -5,7 +5,7 @@ import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 
 const useSignUpWithEmailAndPassword = () => {
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
 
   const loginUser = useAuthStore((state) => state.login);
@@ -23,7 +23,7 @@ const useSignUpWithEmailAndPassword = () => {
         inputs.password
       );
       if (!newUser && error) {
-        console.log(error);
+        alert(error);
         return;
       }
       if (newUser) {
@@ -42,11 +42,11 @@ const useSignUpWithEmailAndPassword = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
-  return { loading, error, signup };
+  return { signup };
 };
 
 export default useSignUpWithEmailAndPassword;

@@ -27,6 +27,15 @@
         "register": "Регистрация",
         "haveProfile": "Вече имате профил? Влезте от тук"
     },
+    "registerError": {
+        "nameRequired": "Това поле е задължително.",
+        "surnameRequired": "Това поле е задължително.",
+        "emailRequired": "Това поле е задължително.",
+        "invalidEmail": "Въведете правилен имейл",
+        "passwordRequired": "",
+        "passwordMismatch": "The passwords don't match.",
+        "phoneRequired": "This field cannot be empty."
+    },
     "profile": {
         "title": "Профил",
         "name": "Име",
