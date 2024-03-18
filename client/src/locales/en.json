@@ -43,6 +43,12 @@
     },
     "map": {
         "title": "Charging stations map"
+    },
+    "forgotPassword": {
+        "title": "Reset your password",
+        "email": "Your email",
+        "sendResetLink": "Reset",
+        "backToLogin": "Go back to login"
     }
   }
   

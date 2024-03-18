@@ -39,6 +39,10 @@ const Login = () => {
         }
     }
 
+    const handleForgotPassword = () => {
+        navigate("/forgot-password")
+    }
+
     return (
         <div>
             <div className="min-h-screen flex justify-center bg-gray-50 py-1 px-4 sm:px-6 lg:px-8">
@@ -55,14 +59,14 @@ const Login = () => {
                                         <label htmlFor="rememberUser">{t("login.signedIn")}</label>
                                         <input className="ml-2" type="checkbox" id="rememberUser" checked={rememberUser} onChange={(e) => setRememberUser(e.target.checked)} />
                                     </div>
-                                    <button type="submit" className="bg-primary text-white text-base mt-5 py-3 px-8 tracking-wide rounded-md self-center w-2/3 hover:bg-secondary duration-300">{t('login.login')}</button>
+                                    <button type="submit" className="bg-primary text-white text-base mt-5 py-3 px-20 tracking-wide rounded-md flex mx-auto hover:bg-secondary duration-300">{t('login.login')}</button>
                                 </div>
                             </form>
                             <div className="flex mx-auto py-2 text-secondary font-bold">
-                                {t('login.forgotPassword')}
+                                <button className="flex mx-auto py-2 text-black font-bold" onClick={handleForgotPassword}>{t('login.forgotPassword')}</button>
                             </div>
                             <Link to="/register" className="font-medium ">
-                                <button className="font-bold">{t('login.noProfile')}</button>
+                                <button className="flex mx-auto py-2 text-secondary font-bold">{t('login.noProfile')}</button>
                             </Link>
                             <div className="flex justify-center mt-10 space-x-4">
                                 <button onClick={() => i18n.changeLanguage('en')} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary duration-300">EN</button>

@@ -15,6 +15,7 @@ import Stations from "./pages/Stations";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
 import AuthGuard from "./components/guards/AuthGuard";
+import ForgotPassword from "./components/ForgotPassword";
 
 const Layout = () => {
   return (
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
   },
   {
     path: "/register",

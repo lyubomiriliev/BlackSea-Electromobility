@@ -8,7 +8,7 @@ const Home = () => {
     const { t } = useTranslation();
 
     return (
-        <div className="max-w-screen-2xl mx-auto py-20 flex flex-col items-center justify-center text-center">
+        <div className="max-w-screen-2xl mx-auto my-10 py-20 flex flex-col items-center justify-center text-center">
 
             <h1 className="text-2xl font-bold mb-6">{t('home.title')}</h1>
             <h2 className="text-xl font-medium mb-6">{t('home.partners')}</h2>

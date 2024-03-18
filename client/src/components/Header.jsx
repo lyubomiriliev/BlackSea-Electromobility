@@ -18,6 +18,7 @@ const Header = () => {
     const languageRef = useRef(null);
     const searchRef = useRef(null);
 
+
     const [showSearch, setShowSearch] = useState(false);
     const [showLanguage, setShowLanguage] = useState(false);
 
@@ -48,7 +49,6 @@ const Header = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [])
-
 
 
     return (
