@@ -2,8 +2,12 @@ import { Link } from "react-router-dom"
 import { logoBlackSea } from "../assets"
 import useSignUpWithEmailAndPassword from "../hooks/useSignUpWithEmailAndPassword"
 import { useState } from "react";
+
 import { useTranslation } from 'react-i18next';
 import i18n from "../i18n";
+
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
 
@@ -30,6 +34,14 @@ const Register = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }
+
+    const handleInputFocus = () => {
+        setShowPassword(true);
+    }
+
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const handleInputBlur = (e) => {
@@ -41,7 +53,7 @@ const Register = () => {
             case 'surname':
                 if (!value.trim()) {
                     errorMessage = t("registerError.emptyName");
-                } else if (!/^[a-zA-Z]+$/.test(value)) {
+                } else if (!/^[a-zA-Zа-яА-Я\s]+$/.test(value)) {
                     errorMessage = t("registerError.invalidName");
                 }
                 break;
@@ -58,6 +70,7 @@ const Register = () => {
                 } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
+                setShowPassword(true);
                 break;
             case 'repeatPassword':
                 if (!value.trim()) {
@@ -83,22 +96,28 @@ const Register = () => {
 
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
+        setShowPassword(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form submitted!");
 
         let formIsValid = true;
         const newErrors = {};
 
-        const nameRegex = /^[a-zA-Z\s]+$/;
-        if (!inputs.name.trim() || !nameRegex.test(inputs.name.trim())) {
-            newErrors.name = t("registerError.nameRequired")
+        const nameRegex = !/^[a-zA-Zа-яА-Я\s]+$/;
+        if (!inputs.name.trim()) {
+            newErrors.name = t("registerError.emptyName")
+            formIsValid = false;
+        } else if (!nameRegex.test(value)) {
+            newErrors.name = t("registerError.nameInvalid")
             formIsValid = false;
         }
-        if (!inputs.surname.trim() || !nameRegex.test(inputs.surname.trim())) {
-            newErrors.surname = t("registerError.surnameRequired");
+        if (!inputs.surname.trim()) {
+            newErrors.surname = t("registerError.emptySurname");
+            formIsValid = false;
+        } else if (!nameRegex.test(inputs.surname.trim())) {
+            newErrors.surname = t("registerError.")
             formIsValid = false;
         }
 
@@ -111,6 +130,7 @@ const Register = () => {
         }
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+
         if (!inputs.password.trim() || !passwordRegex.test(inputs.password.trim())) {
             newErrors.password = t("registerError.passwordRequired");
             formIsValid = false;
@@ -127,14 +147,11 @@ const Register = () => {
             formIsValid = false;
         }
 
-        console.log("Validation errors:", newErrors);
-
         setErrors(newErrors);
 
         if (formIsValid) {
             signup(inputs);
         }
-
 
     };
 
@@ -152,19 +169,39 @@ const Register = () => {
                         <div className="mb-10">
                             <div className="flex flex-col">
                                 <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>
-                                    <div className="grid grid-cols-1 gap-y-4">
+                                    <div className="grid grid-cols-1 gap-y-4 relative">
                                         <input id="name" name="name" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.name")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.name && <p className="text-red-500">{errors.name}</p>}
+                                        {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
                                         <input id="surname" name="surname" type="text" autoComplete="surname" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.surname")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.surname && <p className="text-red-500">{errors.surname}</p>}
+                                        {errors.surname && <p className="text-red-500 text-xs">{errors.surname}</p>}
                                         <input id="email" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.email")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.email && <p className="text-red-500">{errors.email}</p>}
-                                        <input id="password" name="password" type="password" autoComplete="new-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.password")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.password && <p className="text-red-500">{errors.password}</p>}
-                                        <input id="repeatPassword" name="repeatPassword" type="password" autoComplete="new-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.repeatPassword")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.repeatPassword && <p className="text-red-500">{errors.repeatPassword}</p>}
+                                        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+                                        <div className="relative">
+                                            <input
+                                                id="password"
+                                                name="password"
+                                                type={showPassword ? "text" : "password"}
+                                                autoComplete="new-password"
+                                                required
+                                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm pr-10"
+                                                placeholder={t("register.password")}
+                                                onChange={handleInputChange}
+                                                onFocus={handleInputFocus}
+                                                onBlur={handleInputBlur}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={togglePasswordVisibility}
+                                                className="absolute inset-y-0 right-0 flex items-center mr-3 text-gray-400 cursor-pointer"
+                                            >
+                                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                            </button>
+                                        </div>
+                                        {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+                                        <input id="repeatPassword" name="repeatPassword" type={showPassword ? "text" : "password"} autoComplete="new-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.repeatPassword")} onChange={handleInputChange} onBlur={handleInputBlur} />
+                                        {errors.repeatPassword && <p className="text-red-500 text-xs">{errors.repeatPassword}</p>}
                                         <input id="phone" name="phone" type="text" autoComplete="tel" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.phone")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+                                        {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
 
                                     </div>
                                     <Link to="/login">

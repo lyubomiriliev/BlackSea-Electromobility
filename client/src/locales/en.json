@@ -5,7 +5,6 @@
         "title": "BLACK SEA ELECTROMOBILITY",
         "partners": "PARTNERS"
     },
-
     "login": {
         "welcome": "Welcome!",
         "email": "Email",
@@ -14,6 +13,12 @@
         "login": "Login",
         "forgotPassword": "Forgot password?",
         "noProfile": "Don't have a profile? Register here"
+    },
+    "loginError": {
+        "emailRequired": "This field cannot be empty.",
+        "invalidEmail": "This is not a valid email.",
+        "passwordRequired": "This field cannot be empty.",
+        "passwordInvalid": "Password must be at least 6 characters long and include at least one capital letter and one special symbol."
     },
     "register": {
         "create": "Registration",
@@ -29,8 +34,9 @@
     },
     "registerError": {
         "emptyName": "Name cannot be empty.",
-        "invalidName": "Names cannot contain numbers or punctuation.",
-        "surnameRequired": "Invalid surname format",
+        "invalidName": "Name cannot contain numbers or punctuation.",
+        "emptySurname": "Surname cannot be empty",
+        "invalidSurname": "Surname cannot contain numbers or punctuation.",
         "emailRequired": "This field cannot be empty.",
         "invalidEmail": "This is not a valid email.",
         "passwordRequired": "This field cannot be empty.",
