@@ -9,43 +9,20 @@ const Stations = () => {
 
     const { t } = useTranslation();
 
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData } = useStationStore();
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2 } = useStationStore();
 
-    useEffect(() => {
-        const fetchDataForStations = async () => {
-            try {
-                const dataByala1 = await fetchDataByala1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3736');
-                const dataByala2 = await fetchDataByala2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '2946');
-                const dataPrimorsko1 = await fetchDataPrimorsko1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3805');
-                const dataPrimorsko2 = await fetchDataPrimorsko2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '4380');
-
-                setStationData({
-                    stationByala1: dataByala1,
-                    stationByala2: dataByala2,
-                    stationPrimorsko1: dataPrimorsko1,
-                    stationPrimorsko2: dataPrimorsko2,
-                });
-            } catch (error) {
-                console.error("Error fetching data for stations:", error);
-            }
-        };
-
-        fetchDataForStations();
-    }, [setStationData]);
 
     return (
         <div className="w-full bg-white py-40 px-4">
             <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {stationByala1 && (
-                    <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
-                        <img className="w-2/3 h-auto mb-4" src={chargingStationSVG} alt="stationIcon" />
-                        <h2 className="text-xl font-bold mb-2">{stationByala1.Name}</h2>
-                        <p className="text-xl font-bold text-green-500 mb-2">{stationByala1.State}</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.power')}</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationByala1.EVEnergyCharged}kwH</p>
-                        <p className="text-sm text-gray-600 absolute bottom-3 right-3">#3736</p>
-                    </div>
-                )}
+                <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
+                    <img className="w-2/3 h-auto mb-4" src={chargingStationSVG} alt="stationIcon" />
+                    <h2 className="text-xl font-bold mb-2">{!stationByala1 && <p>Бяла 1:</p>}{stationByala1?.Name}</h2>
+                    <p className="text-xl font-bold text-green-500 mb-2">{stationByala1?.State}</p>
+                    <p className="text-sm text-gray-600 mb-2">{t('stations.power')}</p>
+                    <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationByala1?.EVEnergyCharged}kwH</p>
+                    <p className="text-sm text-gray-600 absolute bottom-3 right-3">#3736</p>
+                </div>
                 {stationByala2 && (
                     <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
                         <img className="w-2/3 h-auto mb-4" src={chargingStationSVG} alt="stationIcon" />

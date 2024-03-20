@@ -105,11 +105,12 @@ const Register = () => {
         let formIsValid = true;
         const newErrors = {};
 
-        const nameRegex = !/^[a-zA-Zа-яА-Я\s]+$/;
+        const nameRegex = /^[a-zA-Zа-яА-Я\s]+$/;
+
         if (!inputs.name.trim()) {
             newErrors.name = t("registerError.emptyName")
             formIsValid = false;
-        } else if (!nameRegex.test(value)) {
+        } else if (!nameRegex.test(inputs.name)) {
             newErrors.name = t("registerError.nameInvalid")
             formIsValid = false;
         }
@@ -117,7 +118,7 @@ const Register = () => {
             newErrors.surname = t("registerError.emptySurname");
             formIsValid = false;
         } else if (!nameRegex.test(inputs.surname.trim())) {
-            newErrors.surname = t("registerError.")
+            newErrors.surname = t("registerError.invalidSurname")
             formIsValid = false;
         }
 

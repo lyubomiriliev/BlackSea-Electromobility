@@ -48,6 +48,7 @@
     },
     "profile": {
         "title": "Your profile",
+        "changePassword": "Change password",
         "name": "First name",
         "surname": "Surname",
         "email": "Email",

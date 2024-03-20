@@ -9,6 +9,8 @@ import i18n from "../i18n";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
+import { ToastContainer } from "react-toastify"
+
 const Login = () => {
 
     const { t } = useTranslation();
@@ -163,12 +165,31 @@ const Login = () => {
                                 <div className="grid grid-cols-1 gap-y-4">
                                     <input required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" type="email" placeholder={t('login.email')} value={inputs.email} onChange={handleInputChange} onBlur={handleInputBlur} name="email" />
                                     {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
-                                    <div className="relative">
-                                        <input required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" type={showPassword ? "text" : "password"} placeholder={t('login.password')} value={inputs.password} onChange={handleInputChange} onBlur={handleInputBlur} name="password" />
-                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 text-gray-400 cursor-pointer">
+                                    <div className="relative mb-5">
+                                        <input required
+                                            className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                                            type={showPassword ? "password" : "text"}
+                                            name="password"
+                                            onChange={handleInputChange}
+                                            onBlur={handleInputBlur}
+                                        />
+                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                                             {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                         </button>
                                     </div>
+                                    {/* <div className="relative">
+                                        <input required
+                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                            type={showPassword ? "password" : "text"}
+                                            value={inputs.password}
+                                            onChange={handleInputChange}
+                                            onBlur={handleInputBlur}
+                                            name="password"
+                                        />
+                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 text-gray-400 cursor-pointer">
+                                            {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                        </button>
+                                    </div> */}
                                     {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
                                     <div className="flex items-center">
                                         <label htmlFor="rememberUser">{t("login.signedIn")}</label>
@@ -190,6 +211,18 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer
+                    position="top-left"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
             </div>
 
         </div>

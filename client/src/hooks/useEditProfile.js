@@ -16,14 +16,11 @@ const useEditProfile = () => {
       name: inputs.name || authUser.name,
       surname: inputs.surname || authUser.surname,
       email: inputs.email || authUser.email,
-      password: inputs.password || authUser.password,
       phone: inputs.phone || authUser.phone,
     };
 
     await updateDoc(userDocRef, updatedUser);
-    localStorage.setItem("user-info", JSON.stringify(updatedUser));
     setAuthUser(updatedUser);
-    alert("Промените са запазени успешно.");
   };
 
   return { editProfile };
