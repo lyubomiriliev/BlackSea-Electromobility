@@ -41,15 +41,14 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        setInputs({
+        setInputs(prevInputs => ({
+            ...prevInputs,
             name: authUser?.name || "",
             surname: authUser?.surname || "",
-            oldPassword: "",
-            newPassword: "",
             phone: authUser?.phone || "",
             email: authUser?.email || "",
-        })
-    }, [authUser])
+        }));
+    }, [authUser]);
 
 
 
