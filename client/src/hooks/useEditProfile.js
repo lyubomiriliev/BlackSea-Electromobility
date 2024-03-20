@@ -11,7 +11,7 @@ const useEditProfile = () => {
 
     const userDocRef = doc(firestore, "users", authUser.uid);
 
-    const updatedUser = {
+    const updatedFields = {
       ...authUser,
       name: inputs.name || authUser.name,
       surname: inputs.surname || authUser.surname,
@@ -19,7 +19,9 @@ const useEditProfile = () => {
       phone: inputs.phone || authUser.phone,
     };
 
-    await updateDoc(userDocRef, updatedUser);
+    await updateDoc(userDocRef, updatedFields);
+
+    const updatedUser = { ...authUser, ...updatedFields };
     setAuthUser(updatedUser);
   };
 

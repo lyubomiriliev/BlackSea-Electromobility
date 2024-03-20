@@ -1,5 +1,5 @@
 import useAuthStore from "../store/authStore"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useEditProfile from "../hooks/useEditProfile";
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify"
@@ -11,7 +11,10 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 const Profile = () => {
 
     const { t } = useTranslation();
+
     const authUser = useAuthStore((state) => state.user)
+    const setAuthUser = useAuthStore((state) => state.setUser);
+
     const { editProfile } = useEditProfile();
 
     const [isEmailFocused, setEmailFocused] = useState(false);
@@ -37,6 +40,17 @@ const Profile = () => {
         setInputs({ ...inputs, [name]: value });
     };
 
+    useEffect(() => {
+        setInputs({
+            name: authUser?.name || "",
+            surname: authUser?.surname || "",
+            oldPassword: "",
+            newPassword: "",
+            phone: authUser?.phone || "",
+            email: authUser?.email || "",
+        })
+    }, [authUser])
+
 
 
     const [inputs, setInputs] = useState({
@@ -45,6 +59,7 @@ const Profile = () => {
         oldPassword: "",
         newPassword: "",
         phone: authUser?.phone || "",
+        email: authUser?.email || "",
     });
 
     const handleEditProfile = async () => {
@@ -54,18 +69,13 @@ const Profile = () => {
         const credential = EmailAuthProvider.credential(authUser.email, oldPassword)
 
         try {
-            // await reauthenticateWithCredential(auth.currentUser, credential);
-            if (oldPassword === newPassword && oldPassword !== "" && newPassword !== "") {
-                toast.error("New password cannot be the same as the old one.");
+            if (newPassword && oldPassword !== newPassword && oldPassword !== "") {
+                await updatePassword(auth.currentUser, newPassword);
+                toast.success("Password changed successfully")
+            } else if (oldPassword !== newPassword && oldPassword !== "") {
+                toast.error("New password cannot be the same as the old one.")
                 return;
             }
-
-            if (newPassword !== "") {
-                toast.error("Please provide a new password");
-                return;
-            }
-            await updatePassword(auth.currentUser, newPassword);
-            toast.success("Password changed successfully")
 
             await editProfile({
                 name: inputs.name,
@@ -74,10 +84,19 @@ const Profile = () => {
                 phone: inputs.phone
             });
 
-            localStorage.setItem("user-info", JSON.stringify(inputs));
-            toast.success("Changes saved")
+            const updatedAuthUser = {
+                ...authUser,
+                name: inputs.name,
+                surname: inputs.surname,
+                email: inputs.email,
+                phone: inputs.phone
+            };
+            setAuthUser(updatedAuthUser);
+
+            localStorage.setItem("user-info", JSON.stringify(updatedAuthUser));
+            toast.success("Changes saved successfully")
         } catch (error) {
-            toast.error("Error updating password. Please try again.")
+            toast.error("Error updating profile. Please try again")
         }
 
 
