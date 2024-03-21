@@ -10,6 +10,7 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import { ToastContainer } from "react-toastify"
+import useAuthStore from "../store/authStore";
 
 const Login = () => {
 
@@ -27,8 +28,14 @@ const Login = () => {
         password: "",
     })
 
+    const authUser = useAuthStore((state) => state.user)
+
+
     const [rememberUser, setRememberUser] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const [isEmailFocused, setEmailFocused] = useState(false);
+    const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("rememberedUser");
@@ -84,6 +91,7 @@ const Login = () => {
             case 'email':
                 if (!value.trim()) {
                     errorMessage = t("loginError.emailRequired");
+                    setEmailFocused(false)
                 } else if (!isValidEmail(value)) {
                     errorMessage = t("loginError.invalidEmail");
                 }
@@ -91,6 +99,7 @@ const Login = () => {
             case 'password':
                 if (!value.trim()) {
                     errorMessage = t("loginError.passwordRequired")
+                    setIsPasswordFocused(false);
                 } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
@@ -106,7 +115,6 @@ const Login = () => {
 
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value })
-        setShowPassword(true);
     }
 
     const handleSubmit = (e) => {
@@ -162,34 +170,45 @@ const Login = () => {
                         <h1 className="mt-6 text-center text-4xl font-bold text-gray-900">{t('login.welcome')}</h1>
                         <div className="mt-6">
                             <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>
-                                <div className="grid grid-cols-1 gap-y-4">
-                                    <input required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" type="email" placeholder={t('login.email')} value={inputs.email} onChange={handleInputChange} onBlur={handleInputBlur} name="email" />
+                                <div className="relative mb-5">
+                                    <input
+                                        required
+                                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                        type="email"
+                                        name="email"
+                                        value={inputs.email}
+                                        onChange={handleInputChange}
+                                        onFocus={() => setEmailFocused(true)}
+                                        onBlur={handleInputBlur}
+                                    />
+                                    <label
+                                        className={`absolute left-4 top-5 transform transition-all duration-300  ${isEmailFocused || inputs.email ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                            }`}
+                                        htmlFor="email"
+                                    >
+                                        {t('login.email')}
+                                    </label>
                                     {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
                                     <div className="relative mb-5">
                                         <input required
-                                            className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                                            className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
                                             type={showPassword ? "password" : "text"}
                                             name="password"
                                             onChange={handleInputChange}
+                                            onFocus={() => setIsPasswordFocused(true)}
                                             onBlur={handleInputBlur}
                                         />
+                                        <label
+                                            className={`absolute left-4 top-5 transform transition-all duration-300  ${isPasswordFocused || inputs.password ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                }`}
+                                            htmlFor="email"
+                                        >
+                                            {t('login.password')}
+                                        </label>
                                         <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                                             {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                         </button>
                                     </div>
-                                    {/* <div className="relative">
-                                        <input required
-                                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                                            type={showPassword ? "password" : "text"}
-                                            value={inputs.password}
-                                            onChange={handleInputChange}
-                                            onBlur={handleInputBlur}
-                                            name="password"
-                                        />
-                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 text-gray-400 cursor-pointer">
-                                            {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                                        </button>
-                                    </div> */}
                                     {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
                                     <div className="flex items-center">
                                         <label htmlFor="rememberUser">{t("login.signedIn")}</label>
@@ -211,18 +230,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-                <ToastContainer
-                    position="top-left"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                />
+
             </div>
 
         </div>
