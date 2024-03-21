@@ -30,7 +30,10 @@
         "repeatPassword": "Repeat password",
         "phone": "Phone number",
         "register": "Register",
-        "haveProfile": "Already have an account? Login from here"
+        "haveProfile": "Already have an account? Login from here",
+        "success": "Registered Successfully",
+        "fail": "Registration failed."
+
     },
     "registerError": {
         "emptyName": "Name cannot be empty.",

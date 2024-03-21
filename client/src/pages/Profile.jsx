@@ -119,7 +119,7 @@ const Profile = () => {
                         disabled
                     />
                     <label
-                        className={`absolute left-4 transform -translate-y-1/2 transition-all duration-300 ${isEmailFocused || authUser.email ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="email"
                     >
@@ -137,7 +137,7 @@ const Profile = () => {
                         onBlur={() => setNameFocused(false)}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNameFocused || inputs.name ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNameFocused || inputs.name ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
@@ -155,7 +155,7 @@ const Profile = () => {
                         onBlur={() => setSurnameFocused(false)}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
@@ -173,7 +173,7 @@ const Profile = () => {
                         onBlur={() => setPhoneFocused(false)}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isPhoneFocused || inputs.phone ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isPhoneFocused || inputs.phone ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
@@ -193,7 +193,7 @@ const Profile = () => {
                         {showOldPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isOldPasswordFocused || inputs.oldPassword ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isOldPasswordFocused || inputs.oldPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
@@ -210,7 +210,7 @@ const Profile = () => {
                         onBlur={() => setNewPasswordFocused(false)}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? '-top-0 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-500'
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >

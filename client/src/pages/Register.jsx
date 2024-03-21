@@ -8,6 +8,7 @@ import i18n from "../i18n";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Register = () => {
 
@@ -113,52 +114,59 @@ const Register = () => {
 
         const nameRegex = /^[a-zA-Zа-яА-Я\s]+$/;
 
-        if (!inputs.name.trim()) {
-            newErrors.name = t("registerError.emptyName")
-            formIsValid = false;
-        } else if (!nameRegex.test(inputs.name)) {
-            newErrors.name = t("registerError.nameInvalid")
-            formIsValid = false;
-        }
-        if (!inputs.surname.trim()) {
-            newErrors.surname = t("registerError.emptySurname");
-            formIsValid = false;
-        } else if (!nameRegex.test(inputs.surname.trim())) {
-            newErrors.surname = t("registerError.invalidSurname")
-            formIsValid = false;
+        try {
+            if (!inputs.name.trim()) {
+                newErrors.name = t("registerError.emptyName")
+                formIsValid = false;
+            } else if (!nameRegex.test(inputs.name)) {
+                newErrors.name = t("registerError.nameInvalid")
+                formIsValid = false;
+            }
+            if (!inputs.surname.trim()) {
+                newErrors.surname = t("registerError.emptySurname");
+                formIsValid = false;
+            } else if (!nameRegex.test(inputs.surname.trim())) {
+                newErrors.surname = t("registerError.invalidSurname")
+                formIsValid = false;
+            }
+
+            if (!inputs.email.trim()) {
+                newErrors.email = t("registerError.emailRequired");
+                formIsValid = false;
+            } else if (!isValidEmail(inputs.email)) {
+                newErrors.email = t("registerError.invalidEmail");
+                formIsValid = false;
+            }
+
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+
+            if (!inputs.password.trim() || !passwordRegex.test(inputs.password.trim())) {
+                newErrors.password = t("registerError.passwordRequired");
+                formIsValid = false;
+            }
+
+            if (inputs.password !== inputs.repeatPassword) {
+                newErrors.repeatPassword = t("registerError.passwordMismatch");
+                formIsValid = false;
+            }
+
+            const phoneRegex = /^[0-9+]+$/;
+            if (!inputs.phone.trim() || !phoneRegex.test(inputs.phone.trim())) {
+                newErrors.phone = t("registerError.phoneRequired");
+                formIsValid = false;
+            }
+
+            setErrors(newErrors);
+
+            if (formIsValid) {
+                signup(inputs);
+                toast.success(t("register.success"))
+            }
+        } catch (error) {
+            toast.error(t("register.fail"))
+            console.error(error)
         }
 
-        if (!inputs.email.trim()) {
-            newErrors.email = t("registerError.emailRequired");
-            formIsValid = false;
-        } else if (!isValidEmail(inputs.email)) {
-            newErrors.email = t("registerError.invalidEmail");
-            formIsValid = false;
-        }
-
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-
-        if (!inputs.password.trim() || !passwordRegex.test(inputs.password.trim())) {
-            newErrors.password = t("registerError.passwordRequired");
-            formIsValid = false;
-        }
-
-        if (inputs.password !== inputs.repeatPassword) {
-            newErrors.repeatPassword = t("registerError.passwordMismatch");
-            formIsValid = false;
-        }
-
-        const phoneRegex = /^[0-9+]+$/;
-        if (!inputs.phone.trim() || !phoneRegex.test(inputs.phone.trim())) {
-            newErrors.phone = t("registerError.phoneRequired");
-            formIsValid = false;
-        }
-
-        setErrors(newErrors);
-
-        if (formIsValid) {
-            signup(inputs);
-        }
 
     };
 
@@ -197,7 +205,7 @@ const Register = () => {
                                                 onFocus={() => setNameFocused(true)}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isNameFocused || inputs.name ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300 ${isNameFocused || inputs.name ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >
@@ -213,11 +221,11 @@ const Register = () => {
                                                 type="text"
                                                 className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
                                                 onChange={handleInputChange}
-                                                onBlur={handleInputBlur}
                                                 onFocus={() => setSurnameFocused(true)}
+                                                onBlur={handleInputBlur}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isSurnameFocused || inputs.surname ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >
@@ -237,7 +245,7 @@ const Register = () => {
                                                 onBlur={handleInputBlur}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isEmailFocused || inputs.email ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300  ${isEmailFocused || inputs.email ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >
@@ -257,13 +265,13 @@ const Register = () => {
                                                 onBlur={handleInputBlur}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isPasswordFocused || inputs.password ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300  ${isPasswordFocused || inputs.password ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >
                                                 {t('login.password')}
                                             </label>
-                                            <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                                            <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-4 text-gray-400 cursor-pointer">
                                                 {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                             </button>
                                         </div>
@@ -280,13 +288,13 @@ const Register = () => {
                                                 onBlur={handleInputBlur}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isRepeatPasswordFocused || inputs.repeatPassword ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300  ${isRepeatPasswordFocused || inputs.repeatPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >
                                                 {t('register.repeatPassword')}
                                             </label>
-                                            <button type="button" onClick={toggleRepeatPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                                            <button type="button" onClick={toggleRepeatPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-8 text-gray-400 cursor-pointer">
                                                 {showRepeatPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                             </button>
                                             {errors.repeatPassword && <p className="text-red-500 text-xs">{errors.repeatPassword}</p>}
@@ -303,7 +311,7 @@ const Register = () => {
                                                 onBlur={handleInputBlur}
                                             />
                                             <label
-                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isPhoneFocused || inputs.phone ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                className={`absolute left-4 -mt-3 transition-all duration-300  ${isPhoneFocused || inputs.phone ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                     }`}
                                                 htmlFor="email"
                                             >

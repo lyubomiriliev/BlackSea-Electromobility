@@ -34,7 +34,6 @@ const useSignUpWithEmailAndPassword = () => {
           email: inputs.email,
           password: inputs.password,
           phone: inputs.phone,
-          profilePicURL: "",
         };
         await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
         localStorage.setItem("user-info", JSON.stringify(userDoc));

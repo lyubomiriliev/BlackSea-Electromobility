@@ -182,7 +182,7 @@ const Login = () => {
                                         onBlur={handleInputBlur}
                                     />
                                     <label
-                                        className={`absolute left-4 top-5 transform transition-all duration-300  ${isEmailFocused || inputs.email ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                        className={`absolute left-4 -mt-3 transition-all duration-300  ${isEmailFocused || inputs.email ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                             }`}
                                         htmlFor="email"
                                     >
@@ -199,7 +199,7 @@ const Login = () => {
                                             onBlur={handleInputBlur}
                                         />
                                         <label
-                                            className={`absolute left-4 top-5 transform transition-all duration-300  ${isPasswordFocused || inputs.password ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                            className={`absolute left-4 -mt-3 transition-all duration-300  ${isPasswordFocused || inputs.password ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                                                 }`}
                                             htmlFor="email"
                                         >
