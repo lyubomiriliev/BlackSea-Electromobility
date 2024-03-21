@@ -33,13 +33,14 @@ const Register = () => {
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
 
-    const handleInputFocus = () => {
-        setShowPassword(true);
+    const toggleRepeatPasswordVisibility = () => {
+        setShowRepeatPassword(!showRepeatPassword);
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -53,6 +54,8 @@ const Register = () => {
             case 'surname':
                 if (!value.trim()) {
                     errorMessage = t("registerError.emptyName");
+                    setNameFocused(false);
+                    setSurnameFocused(false);
                 } else if (!/^[a-zA-Zа-яА-Я\s]+$/.test(value)) {
                     errorMessage = t("registerError.invalidName");
                 }
@@ -60,6 +63,7 @@ const Register = () => {
             case 'email':
                 if (!value.trim()) {
                     errorMessage = t("registerError.emailRequired")
+                    setEmailFocused(false);
                 } else if (!emailRegex.test(value)) {
                     errorMessage = t("registerError.invalidEmail")
                 }
@@ -67,6 +71,7 @@ const Register = () => {
             case 'password':
                 if (!value.trim()) {
                     errorMessage = t("registerError.passwordRequired")
+                    setPasswordFocused(false);
                 } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
@@ -75,6 +80,7 @@ const Register = () => {
             case 'repeatPassword':
                 if (!value.trim()) {
                     errorMessage = t("registerError.repeatPasswordRequired")
+                    setRepeatPasswordFocused(false);
                 } else if (inputs.password !== inputs.repeatPassword) {
                     errorMessage = t("registerError.passwordMismatch")
                 }
@@ -82,6 +88,7 @@ const Register = () => {
             case 'phone':
                 if (!value.trim()) {
                     errorMessage = t("registerError.phoneRequired")
+                    setPhoneFocused(false);
                 } else if (!/^[0-9+]+$/.test(value)) {
                     errorMessage = t("registerError.phoneInvalid");
                 }
@@ -96,7 +103,6 @@ const Register = () => {
 
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
-        setShowPassword(true);
     };
 
     const handleSubmit = (e) => {
@@ -160,6 +166,14 @@ const Register = () => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
+    const [isNameFocused, setNameFocused] = useState(false);
+    const [isSurnameFocused, setSurnameFocused] = useState(false);
+    const [isEmailFocused, setEmailFocused] = useState(false);
+    const [isPasswordFocused, setPasswordFocused] = useState(false);
+    const [isRepeatPasswordFocused, setRepeatPasswordFocused] = useState(false);
+    const [isPhoneFocused, setPhoneFocused] = useState(false);
+
+
     return (
         <div>
             <div className="min-h-screen flex justify-center bg-gray-50 py-1 px-4 sm:px-6 lg:px-8">
@@ -171,38 +185,132 @@ const Register = () => {
                             <div className="flex flex-col">
                                 <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>
                                     <div className="grid grid-cols-1 gap-y-4 relative">
-                                        <input id="name" name="name" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.name")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
-                                        <input id="surname" name="surname" type="text" autoComplete="surname" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.surname")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.surname && <p className="text-red-500 text-xs">{errors.surname}</p>}
-                                        <input id="email" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.email")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
                                         <div className="relative">
                                             <input
+                                                required
+                                                id="name"
+                                                name="name"
+                                                type="text"
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                                onChange={handleInputChange}
+                                                onBlur={handleInputBlur}
+                                                onFocus={() => setNameFocused(true)}
+                                            />
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isNameFocused || inputs.name ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
+                                            >
+                                                {t('register.name')}
+                                            </label>
+                                            {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
+                                        </div>
+                                        <div className="relative">
+                                            <input
+                                                required
+                                                id="surname"
+                                                name="surname"
+                                                type="text"
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                                onChange={handleInputChange}
+                                                onBlur={handleInputBlur}
+                                                onFocus={() => setSurnameFocused(true)}
+                                            />
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isSurnameFocused || inputs.surname ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
+                                            >
+                                                {t('register.surname')}
+                                            </label>
+                                            {errors.surname && <p className="text-red-500 text-xs">{errors.surname}</p>}
+                                        </div>
+                                        <div className="relative ">
+                                            <input
+                                                required
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                                type="email"
+                                                name="email"
+                                                value={inputs.email}
+                                                onChange={handleInputChange}
+                                                onFocus={() => setEmailFocused(true)}
+                                                onBlur={handleInputBlur}
+                                            />
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isEmailFocused || inputs.email ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
+                                            >
+                                                {t('login.email')}
+                                            </label>
+                                            {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+                                        </div>
+                                        <div className="relative">
+                                            <input
+                                                required
                                                 id="password"
                                                 name="password"
                                                 type={showPassword ? "text" : "password"}
-                                                autoComplete="new-password"
-                                                required
-                                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm pr-10"
-                                                placeholder={t("register.password")}
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
                                                 onChange={handleInputChange}
-                                                onFocus={handleInputFocus}
+                                                onFocus={() => setPasswordFocused(true)}
                                                 onBlur={handleInputBlur}
                                             />
-                                            <button
-                                                type="button"
-                                                onClick={togglePasswordVisibility}
-                                                className="absolute inset-y-0 right-0 flex items-center mr-3 text-gray-400 cursor-pointer"
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isPasswordFocused || inputs.password ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
                                             >
+                                                {t('login.password')}
+                                            </label>
+                                            <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                                                 {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                             </button>
                                         </div>
                                         {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
-                                        <input id="repeatPassword" name="repeatPassword" type={showPassword ? "text" : "password"} autoComplete="new-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.repeatPassword")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.repeatPassword && <p className="text-red-500 text-xs">{errors.repeatPassword}</p>}
-                                        <input id="phone" name="phone" type="text" autoComplete="tel" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder={t("register.phone")} onChange={handleInputChange} onBlur={handleInputBlur} />
-                                        {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+                                        <div className="relative">
+                                            <input
+                                                required
+                                                id="repeatPassword"
+                                                name="repeatPassword"
+                                                type={showRepeatPassword ? "text" : "password"}
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                                onChange={handleInputChange}
+                                                onFocus={() => setRepeatPasswordFocused(true)}
+                                                onBlur={handleInputBlur}
+                                            />
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isRepeatPasswordFocused || inputs.repeatPassword ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
+                                            >
+                                                {t('register.repeatPassword')}
+                                            </label>
+                                            <button type="button" onClick={toggleRepeatPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                                                {showRepeatPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                            </button>
+                                            {errors.repeatPassword && <p className="text-red-500 text-xs">{errors.repeatPassword}</p>}
+                                        </div>
+                                        <div className="relative">
+                                            <input
+                                                required
+                                                id="phone"
+                                                name="phone"
+                                                type="text"
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                                                onChange={handleInputChange}
+                                                onFocus={() => setPhoneFocused(true)}
+                                                onBlur={handleInputBlur}
+                                            />
+                                            <label
+                                                className={`absolute left-4 top-5 transform transition-all duration-300  ${isPhoneFocused || inputs.phone ? '-top-2 text-sm bg-white px-2 text-gray-400' : 'top-1/2 -translate-y-1/2 text-gray-400'
+                                                    }`}
+                                                htmlFor="email"
+                                            >
+                                                {t('register.phone')}
+                                            </label>
+                                            {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+                                        </div>
 
                                     </div>
                                     <Link to="/login">
