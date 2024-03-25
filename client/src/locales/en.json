@@ -55,14 +55,15 @@
         "name": "First name",
         "surname": "Surname",
         "email": "Email",
-        "oldPassword": "Old password",
         "newPassword": "New password",
+        "repeatNewPassword": "Repeat new password",
         "phone": "Phone number",
         "submit": "Save"
     },
     "stations": {
         "power": "Power 22kw",
-        "charge": "Charged Power:"
+        "charge": "Charged Power:",
+        "search": "Searching for stations"
     },
     "map": {
         "title": "Charging stations map"

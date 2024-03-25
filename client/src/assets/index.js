@@ -7,6 +7,7 @@ import profileIcon from "../assets/profileIcon.svg";
 import stationsIcon from "../assets/stationsIcon.svg";
 import chargingStation from "../assets/chargingStation.svg";
 import chargingStationSVG from "../assets/chargingStationSVG.svg";
+import BlackSeaLogo from "../assets/BlackSea-LogoSVG2.svg";
 
 import primorsko from "../assets/primorskoLogo.svg";
 import byalaLogo from "../assets/byalaLogo.svg";
@@ -25,6 +26,11 @@ import whiteMap from "../assets/white/whiteMap.svg";
 import whiteProfile from "../assets/white/whiteProfile.svg";
 import whiteSearch from "../assets/white/whiteSearch.svg";
 import whiteStations from "../assets/white/whiteStations.svg";
+import whiteHome1 from "../assets/white/whiteHome1.svg";
+import whiteMap1 from "../assets/white/whiteMap1.svg";
+import whiteProfile1 from "../assets/white/whiteProfile1.svg";
+import whiteSearch1 from "../assets/white/whiteSearch1.svg";
+import whiteStations1 from "../assets/white/whiteStations1.svg";
 
 export {
   logoBlackSea,
@@ -52,4 +58,10 @@ export {
   abchoPNG,
   norwayLogo,
   okolnaSreda,
+  BlackSeaLogo,
+  whiteHome1,
+  whiteMap1,
+  whiteProfile1,
+  whiteSearch1,
+  whiteStations1,
 };

@@ -14,6 +14,8 @@ const useLogout = () => {
         toast.success("Logged out succesfully");
       });
       localStorage.removeItem("user-info");
+      localStorage.removeItem("stationData");
+
       navigate("/login");
     } catch (error) {}
   };

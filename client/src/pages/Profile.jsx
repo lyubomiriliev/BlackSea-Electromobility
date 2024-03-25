@@ -20,15 +20,79 @@ const Profile = () => {
     const [isEmailFocused, setEmailFocused] = useState(false);
     const [isNameFocused, setNameFocused] = useState(false);
     const [isSurnameFocused, setSurnameFocused] = useState(false);
-    const [isOldPasswordFocused, setOldPasswordFocused] = useState(false);
+    const [isrepeatNewPasswordFocused, setRepeatNewPasswordFocused] = useState(false);
     const [isNewPasswordFocused, setNewPasswordFocused] = useState(false);
     const [isPhoneFocused, setPhoneFocused] = useState(false);
 
-    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showrepeatNewPassword, setShowrepeatNewPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
 
-    const toggleOldPasswordVisibility = () => {
-        setShowOldPassword(!showOldPassword)
+    const [errors, setErrors] = useState({
+        name: "",
+        surname: "",
+        email: "",
+        phone: "",
+        newPassword: "",
+        repeatNewPassword: "",
+    });
+
+    const handleInputBlur = (e) => {
+        const { name, value } = e.target;
+        let errorMessage = "";
+
+        switch (name) {
+            case 'name':
+            case 'surname':
+                if (!value.trim()) {
+                    errorMessage = t("registerError.emptyName");
+                    setNameFocused(false);
+                    setSurnameFocused(false);
+                } else if (!/^[a-zA-Zа-яА-Я\s]+$/.test(value)) {
+                    errorMessage = t("registerError.invalidName");
+                }
+                break;
+            case 'email':
+                if (!value.trim()) {
+                    errorMessage = t("registerError.emailRequired")
+                } else if (!emailRegex.test(value)) {
+                    errorMessage = t("registerError.invalidEmail")
+                }
+                break;
+            case 'newPassword':
+                if (!value.trim()) {
+                    errorMessage = t("registerError.passwordRequired")
+                    setNewPasswordFocused(false);
+                } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
+                    errorMessage = t("registerError.passwordInvalid");
+                }
+                setShowNewPassword(true);
+                break;
+            case 'repeatNewPassword':
+                if (!value.trim()) {
+                    errorMessage = t("registerError.repeatPasswordRequired")
+                    setRepeatNewPasswordFocused(false);
+                } else if (inputs.newPassword !== inputs.repeatNewPassword) {
+                    errorMessage = t("registerError.passwordMismatch")
+                }
+                break;
+            case 'phone':
+                if (!value.trim()) {
+                    errorMessage = t("registerError.phoneRequired")
+                    setPhoneFocused(false);
+                } else if (!/^[0-9+]+$/.test(value)) {
+                    errorMessage = t("registerError.phoneInvalid");
+                }
+                break;
+        }
+
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [name]: errorMessage
+        }));
+    }
+
+    const togglerepeatNewPasswordVisibility = () => {
+        setShowrepeatNewPassword(!showrepeatNewPassword)
     }
 
     const toggleNewPasswordVisibility = () => {
@@ -55,23 +119,23 @@ const Profile = () => {
     const [inputs, setInputs] = useState({
         name: authUser?.name || "",
         surname: authUser?.surname || "",
-        oldPassword: "",
         newPassword: "",
+        repeatNewPassword: "",
         phone: authUser?.phone || "",
         email: authUser?.email || "",
     });
 
     const handleEditProfile = async () => {
 
-        const { oldPassword, newPassword } = inputs;
+        const { repeatNewPassword, newPassword } = inputs;
 
-        const credential = EmailAuthProvider.credential(authUser.email, oldPassword)
+        const credential = EmailAuthProvider.credential(authUser.email, repeatNewPassword)
 
         try {
-            if (newPassword && oldPassword !== newPassword && oldPassword !== "") {
+            if (newPassword && repeatNewPassword !== newPassword && repeatNewPassword !== "") {
                 await updatePassword(auth.currentUser, newPassword);
                 toast.success("Password changed successfully")
-            } else if (oldPassword !== newPassword && oldPassword !== "") {
+            } else if (repeatNewPassword !== newPassword && repeatNewPassword !== "") {
                 toast.error("New password cannot be the same as the old one.")
                 return;
             }
@@ -134,7 +198,7 @@ const Profile = () => {
                         value={inputs.name}
                         onChange={handleInputChange}
                         onFocus={() => setNameFocused(true)}
-                        onBlur={() => setNameFocused(false)}
+                        onBlur={handleInputBlur}
                     />
                     <label
                         className={`absolute left-4 -mt-3 transition-all duration-300 ${isNameFocused || inputs.name ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
@@ -143,6 +207,7 @@ const Profile = () => {
                     >
                         {t('profile.name')}
                     </label>
+                    {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
                 </div>
                 <div className="relative mb-5">
                     <input
@@ -152,7 +217,7 @@ const Profile = () => {
                         value={inputs.surname}
                         onChange={handleInputChange}
                         onFocus={() => setSurnameFocused(true)}
-                        onBlur={() => setSurnameFocused(false)}
+                        onBlur={handleInputBlur}
                     />
                     <label
                         className={`absolute left-4 -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
@@ -161,6 +226,7 @@ const Profile = () => {
                     >
                         {t('profile.surname')}
                     </label>
+                    {errors.surname && <p className="text-red-500 text-xs">{errors.surname}</p>}
                 </div>
                 <div className="relative mb-5">
                     <input
@@ -170,7 +236,7 @@ const Profile = () => {
                         value={inputs.phone}
                         onChange={handleInputChange}
                         onFocus={() => setPhoneFocused(true)}
-                        onBlur={() => setPhoneFocused(false)}
+                        onBlur={handleInputBlur}
                     />
                     <label
                         className={`absolute left-4 -mt-3 transition-all duration-300 ${isPhoneFocused || inputs.phone ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
@@ -179,27 +245,9 @@ const Profile = () => {
                     >
                         {t('profile.phone')}
                     </label>
+                    {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
                 </div>
-                <div className="relative mb-5">
-                    <input required
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
-                        type={showOldPassword ? "text" : "password"}
-                        name="oldPassword"
-                        onChange={handleInputChange}
-                        onFocus={() => setOldPasswordFocused(true)}
-                        onBlur={() => setOldPasswordFocused(false)}
-                    />
-                    <button type="button" onClick={toggleOldPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
-                        {showOldPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                    </button>
-                    <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isOldPasswordFocused || inputs.oldPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
-                            }`}
-                        htmlFor="name"
-                    >
-                        {t('profile.oldPassword')}
-                    </label>
-                </div>
+                <h1 className="text-3xl font-bold mb-6">{t('profile.changePassword')}</h1>
                 <div className="relative mb-5">
                     <input
                         className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
@@ -207,7 +255,7 @@ const Profile = () => {
                         name="newPassword"
                         onChange={handleInputChange}
                         onFocus={() => setNewPasswordFocused(true)}
-                        onBlur={() => setNewPasswordFocused(false)}
+                        onBlur={handleInputBlur}
                     />
                     <label
                         className={`absolute left-4 -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
@@ -216,9 +264,31 @@ const Profile = () => {
                     >
                         {t('profile.newPassword')}
                     </label>
+                    {errors.newPassword && <p className="text-red-500 text-xs">{errors.newPassword}</p>}
                     <button type="button" onClick={toggleNewPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                         {showNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
+                </div>
+                <div className="relative mb-5">
+                    <input required
+                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        type={showrepeatNewPassword ? "text" : "password"}
+                        name="repeatNewPassword"
+                        onChange={handleInputChange}
+                        onFocus={() => setRepeatNewPasswordFocused(true)}
+                        onBlur={handleInputBlur}
+                    />
+                    <button type="button" onClick={togglerepeatNewPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                        {showrepeatNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    </button>
+                    <label
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isrepeatNewPasswordFocused || inputs.repeatNewPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                            }`}
+                        htmlFor="name"
+                    >
+                        {t('profile.repeatNewPassword')}
+                    </label>
+                    {errors.repeatNewPassword && <p className="text-red-500 text-xs">{errors.repeatNewPassword}</p>}
                 </div>
                 <button onClick={handleEditProfile} className="bg-secondary text-white py-3 px-8 rounded-md hover:bg-primary duration-300 mt-6 w-1/3">{t('profile.submit')}</button>
                 <div className="flex items-center mt-6">

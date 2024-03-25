@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useStationStore } from "./store/useStationStore";
 import { useEffect } from "react";
 import { fetchDataByala1, fetchDataByala2, fetchDataPrimorsko1, fetchDataPrimorsko2 } from "./utils/api";
+import StationsDetails from "./components/StationsDetails";
 
 const Layout = () => {
   return (
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         element: <AuthGuard><Stations /></AuthGuard>
       },
       {
+        path: "/station-details/:name",
+        element: <StationsDetails />
+      },
+      {
         path: "/map",
         element: <AuthGuard><Map /></AuthGuard>
       },
@@ -82,6 +87,10 @@ const router = createBrowserRouter([
 ])
 function App() {
 
+  const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2 } = useStationStore();
+
+  [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].map(station => station)
+
   const { setStationData } = useStationStore();
 
   const MINUTE_MS = 60000;
@@ -94,18 +103,26 @@ function App() {
         const dataPrimorsko1 = await fetchDataPrimorsko1('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '3805');
         const dataPrimorsko2 = await fetchDataPrimorsko2('vesso@raytex-bg.com', 'tgrnc02YmExVtRiXIjzMpp10D44y2Hyc', '4380');
 
-        setStationData({
+        const stationData = ({
           stationByala1: dataByala1,
           stationByala2: dataByala2,
           stationPrimorsko1: dataPrimorsko1,
           stationPrimorsko2: dataPrimorsko2,
         });
-        console.log("ffs")
+
+        if (stationData) {
+          localStorage.setItem('stationData', JSON.stringify(stationData))
+          setStationData(stationData);
+        } else {
+          console.warn("stationData is undefined or null")
+        }
+
       } catch (error) {
         console.error("Error fetching data for stations:", error);
       }
     };
 
+    fetchDataForStations();
     const interval = setInterval(fetchDataForStations, MINUTE_MS);
 
     return () => clearInterval(interval);
