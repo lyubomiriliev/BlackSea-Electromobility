@@ -2,33 +2,53 @@ import { useTranslation } from "react-i18next";
 import { chargingStationSVG } from "../assets";
 import { useStationStore } from "../store/useStationStore";
 import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 const StationsDetails = () => {
 
     const { t } = useTranslation();
-
     const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2 } = useStationStore();
     const { name } = useParams()
+    const [stationData, setStationData] = useState(null);
 
-    const stationData = [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].find(station => station && station.Name === decodeURIComponent(name))
+    useEffect(() => {
+        const storedStationData = localStorage.getItem('stationData');
+        if (storedStationData) {
+            const parsedStationData = JSON.parse(storedStationData);
+            if (parsedStationData[name]) {
+                setStationData(parsedStationData[name]);
+            } else {
+                const foundStation = [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].find(station => station && station.Name === decodeURIComponent(name));
+                if (foundStation) {
+                    setStationData(foundStation);
+                    localStorage.setItem('stationData', JSON.stringify({ ...parsedStationData, [foundStation.Name]: foundStation }))
+                }
+            }
+        } else {
+            const foundStation = [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].find(station => station && station.Name === decodeURIComponent(name));
+            if (foundStation) {
+                setStationData(foundStation);
+                localStorage.setItem('stationData', JSON.stringify({ [foundStation.Name]: foundStation }));
+            }
+        }
 
-    if (!stationData) {
+    }, [name, stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2]);
 
-    }
 
     return (
         <div className="w-full bg-white py-20 px-4">
             <div className="flex justify-center mb-4 relative">
                 <div className="max-w-screen-xl mx-auto flex">
                     <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
-                        <img className="w-2/3 h-2/3" src={chargingStationSVG} alt="stationIcon" />
-                        <h2 className="text-xl font-bold mb-2">{stationData.Name}</h2>
-                        <p className="text-xl font-bold text-green-500 mb-2">{stationData.State}</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.power')}</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationData.EVEnergyCharged}kwH</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationData.EVChargePower}kw</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationData.EVPlugState}</p>
+                        <img className="w-1/3" src={chargingStationSVG} alt="stationIcon" />
+                        <h2 className="text-xl font-bold mb-2">{stationData?.Name}</h2>
+                        <p className="text-xl font-bold text-green-500 mb-2">{stationData?.State}</p>
+                        <p className="text-sm font-bold text-gray-600 mb-2">{t('stations.power')}</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.charged')} {stationData?.EVEnergyCharged}kwH</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationData?.EVChargePower}kw</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.plugState')} {stationData?.EVPlugState}</p>
                         <p className="text-sm text-gray-600 font-bold absolute top-3 right-3">#3736</p>
                     </div>
 
@@ -43,6 +63,11 @@ const StationsDetails = () => {
             </div>
         </div>
     );
-}
+
+
+};
+
+
+
 
 export default StationsDetails

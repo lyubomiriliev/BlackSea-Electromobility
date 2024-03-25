@@ -31,6 +31,8 @@ import whiteMap1 from "../assets/white/whiteMap1.svg";
 import whiteProfile1 from "../assets/white/whiteProfile1.svg";
 import whiteSearch1 from "../assets/white/whiteSearch1.svg";
 import whiteStations1 from "../assets/white/whiteStations1.svg";
+import popUp from "../assets/popUp.svg";
+import popUp2 from "../assets/popUp2.png";
 
 export {
   logoBlackSea,
@@ -64,4 +66,6 @@ export {
   whiteProfile1,
   whiteSearch1,
   whiteStations1,
+  popUp,
+  popUp2,
 };

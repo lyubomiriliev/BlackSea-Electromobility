@@ -47,7 +47,7 @@ const Stations = () => {
             <div className="flex justify-center mb-10 relative">
 
             </div>
-            <div className="relative flex">
+            <div className="xl:w-1/3 mx-auto md:w-2/3 relative flex">
                 <FaSearch className=" mt-3 text-primary scale-150" />
                 <input
                     className="input-field border bg-white border-gray-300 rounded-md mb-5 ml-3 px-4 py-2 w-full focus:outline-none focus:border-primary"
@@ -68,7 +68,7 @@ const Stations = () => {
 
             </div>
             {isLoading ? (
-                <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[...Array(4)].map((_, index) => (
                         <div key={index} className="bg-gray-300 rounded-md py-12 relative flex flex-col justify-center items-center animate-pulse">
                             <div className="w-2/3 h-16 mb-4 bg-gray-200 rounded-md"></div>
@@ -84,15 +84,15 @@ const Stations = () => {
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2] : filteredStations).map(station => (
-                        <Link key={station.Name} to={`/station-details/${station.Name}`} className="hover: opacity-80">
-                            <div className="flex justify-center">
-                                <h2 className="text-xl font-bold text-gray-800">{station.Name}</h2>
-                            </div>
+                        <Link key={station.Name} to={`/station-details/${station.Name}`} className=" hover:opacity-70">
                             <div className="bg-gray-100 rounded-md p-6 flex justify-center items-center">
-                                <p className="text-xl font-bold text-green-500 mb-2">{station.State}</p>
-                                <div className="flex">
-                                    <p className="text-sm text-gray-600 mb-2">{t('stations.power')}</p>
+                                <div className="flex flex-col mr-3">
+                                    <h2 className="text-l font-bold text-gray-800">{station.Name}</h2>
+                                    <p className="text-l font-bold text-green-500">{station.State}</p>
+                                </div>
+                                <div className="flex flex-col ml-5">
                                     <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {station.EVEnergyCharged}kwH</p>
+                                    <p className="text-sm text-gray-600">{t('stations.power')}</p>
                                 </div>
                                 <div className="flex justify-end">
                                     <img className=" w-20 h-auto" src={chargingStationSVG} alt="stationIcon" />

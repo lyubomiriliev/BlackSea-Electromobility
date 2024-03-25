@@ -15,7 +15,8 @@ const useLogout = () => {
       });
       localStorage.removeItem("user-info");
       localStorage.removeItem("stationData");
-
+      localStorage.removeItem("modalShown");
+      localStorage.removeItem("mobileModalShown");
       navigate("/login");
     } catch (error) {}
   };
