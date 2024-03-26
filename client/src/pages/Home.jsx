@@ -35,6 +35,7 @@ const Home = () => {
 
     useEffect(() => {
         const isMobile = window.innerWidth <= 768;
+        const isLoggedIn = localStorage.getItem("user-info");
         if (isMobile) {
             const mobileModalShown = localStorage.getItem('mobileModalShown');
             if (!mobileModalShown) {
@@ -42,7 +43,6 @@ const Home = () => {
                 localStorage.setItem('mobileModalShown', true)
             }
         } else {
-            const isLoggedIn = localStorage.getItem("user-info");
             if (isLoggedIn) {
                 const modalShown = localStorage.getItem('modalShown');
                 if (!modalShown) {

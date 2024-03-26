@@ -1,0 +1,15 @@
+{
+    "name": "BlackSea Electromobility",
+    "short_name": "BSEA",
+    "icons": [
+      {
+        "src": "../src/assets/BlackSea-IconLogo.png",
+        "sizes": "60x60",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+  }

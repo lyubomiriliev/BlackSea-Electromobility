@@ -74,7 +74,9 @@
         "title": "Reset your password",
         "email": "Your email",
         "sendResetLink": "Reset",
-        "backToLogin": "Go back to login"
+        "backToLogin": "Go back to login",
+        "resetEmailSent": "Reset email sent",
+        "emailNotRegistered": "There is no account associated with this email. Please try again"
     }
   }
   
