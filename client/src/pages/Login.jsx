@@ -192,7 +192,7 @@ const Login = () => {
                                     <div className="relative mb-5">
                                         <input required
                                             className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
-                                            type={showPassword ? "password" : "text"}
+                                            type={showPassword ? "text" : "password"}
                                             name="password"
                                             onChange={handleInputChange}
                                             onFocus={() => setIsPasswordFocused(true)}

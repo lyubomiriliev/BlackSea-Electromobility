@@ -32,7 +32,7 @@ const StationsDetails = () => {
 
     return (
         <div className="w-full bg-white py-20 px-4">
-            <div className="flex justify-center mb-4 relative">
+            <div className="flex justify-center mb-4 relative mt-5">
                 <div className="max-w-screen-xl mx-auto flex">
                     <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
                         <img className="w-1/3" src={chargingStationSVG} alt="stationIcon" />
