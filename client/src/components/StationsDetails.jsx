@@ -9,33 +9,26 @@ import { useEffect } from "react";
 const StationsDetails = () => {
 
     const { t } = useTranslation();
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2 } = useStationStore();
+    const { setStationData } = useStationStore();
     const { name } = useParams()
-    const [stationData, setStationData] = useState(null);
+    const [newStationData, setNewStationData] = useState(null);
 
     useEffect(() => {
         const storedStationData = localStorage.getItem('stationData');
         if (storedStationData) {
             const parsedStationData = JSON.parse(storedStationData);
             if (parsedStationData[name]) {
-                setStationData(parsedStationData[name]);
-            } else {
-                const foundStation = [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].find(station => station && station.Name === decodeURIComponent(name));
-                if (foundStation) {
-                    setStationData(foundStation);
-                    localStorage.setItem('stationData', JSON.stringify({ ...parsedStationData, [foundStation.Name]: foundStation }))
-                }
+                setNewStationData(parsedStationData[name]);
             }
         } else {
-            const foundStation = [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].find(station => station && station.Name === decodeURIComponent(name));
+            const foundStation = Object.values(stations).find(station => station.Name === decodeURIComponent(name));
             if (foundStation) {
                 setStationData(foundStation);
                 localStorage.setItem('stationData', JSON.stringify({ [foundStation.Name]: foundStation }));
             }
         }
 
-    }, [name, stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2]);
-
+    }, [name]);
 
     return (
         <div className="w-full bg-white py-20 px-4">
@@ -43,12 +36,13 @@ const StationsDetails = () => {
                 <div className="max-w-screen-xl mx-auto flex">
                     <div className="bg-gray-100 rounded-md p-6 relative flex flex-col justify-center items-center">
                         <img className="w-1/3" src={chargingStationSVG} alt="stationIcon" />
-                        <h2 className="text-xl font-bold mb-2">{stationData?.Name}</h2>
-                        <p className="text-xl font-bold text-green-500 mb-2">{stationData?.State}</p>
+                        <h2 className="text-xl font-bold mb-2">{newStationData?.Name}</h2>
+                        <p className="text-xl font-bold text-green-500 mb-2">{newStationData?.State}</p>
                         <p className="text-sm font-bold text-gray-600 mb-2">{t('stations.power')}</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charged')} {stationData?.EVEnergyCharged}kwH</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {stationData?.EVChargePower}kw</p>
-                        <p className="text-sm text-gray-600 mb-2">{t('stations.plugState')} {stationData?.EVPlugState}</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.totalEnergy')} {newStationData?.EVTotalEnergyCharged}kwH</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.charged')} {newStationData?.EVEnergyCharged}kwH</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {newStationData?.EVChargePower}kw</p>
+                        <p className="text-sm text-gray-600 mb-2">{t('stations.plugState')} {newStationData?.EVPlugState}</p>
                         <p className="text-sm text-gray-600 font-bold absolute top-3 right-3">#3736</p>
                     </div>
 

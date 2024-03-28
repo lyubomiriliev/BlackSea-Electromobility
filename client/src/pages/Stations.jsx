@@ -4,29 +4,45 @@ import { useTranslation } from 'react-i18next';
 import { useStationStore } from "../store/useStationStore";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { fetchDataForAllStations } from "../utils/api";
 
 
 const Stations = () => {
 
     const { t } = useTranslation();
 
-
-    const { setStationData } = useStationStore();
-
-
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2 } = useStationStore();
-    const isLoading = !stationByala1 && !stationByala2 && !stationPrimorsko1 && !stationPrimorsko2;
-
-
-    const [inputs, setInputs] = useState({
-        search: ""
-    })
-
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData } = useStationStore();
+    const [inputs, setInputs] = useState({ search: "" })
     const [isSearchFocused, setSearchFocused] = useState(false);
 
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
+
+
+    // const [newStationData, setNewStationData] = useState(null);
+
+    // useEffect(() => {
+    //     const client = new WebSocket('ws://www.ecarup.com/api/Ocpp16/65C48CA26C75CG83/', 'ocpp1.6');
+
+
+    //     client.onerror = (error) => {
+    //         console.error('WebSocket Error: ', error);
+    //     };
+
+    //     client.onmessage = (e) => {
+    //         const data = JSON.parse(e.data);
+    //         setNewStationData(data);
+    //     };
+
+    //     return () => {
+    //         client.close();
+    //     };
+    // }, []);
+
+    const [isFetchingData, setIsFetchingData] = useState(true);
+
+    const isLoading = isFetchingData;
 
     useEffect(() => {
         const storedStationData = localStorage.getItem('stationData');
@@ -34,9 +50,41 @@ const Stations = () => {
         if (storedStationData) {
             const parsedStationData = JSON.parse(storedStationData);
             setStationData(parsedStationData);
+            setIsFetchingData(false);
         }
     }, [])
 
+
+    const MINUTE_MS = 60000;
+
+    const stationCodes = [3736, 2946, 3805, 4380]
+
+    useEffect(() => {
+        const fetchDataForStations = async () => {
+            try {
+                const stationData = await fetchDataForAllStations("vesso@raytex-bg.com", "tgrnc02YmExVtRiXIjzMpp10D44y2Hyc", stationCodes);
+
+                const updatedStationData = {
+                    "Бяла 1": { ...stationData["Бяла 1"], Name: "Бяла 1" },
+                    "Бяла 2": { ...stationData["Бяла 2"], Name: "Бяла 2" },
+                    "Приморско 1": { ...stationData["Приморско 1"], Name: "Приморско 1" },
+                    "Приморско 2": { ...stationData["Приморско 2"], Name: "Приморско 2" },
+                };
+                localStorage.setItem('stationData', JSON.stringify(updatedStationData));
+                setStationData(updatedStationData);
+                setIsFetchingData(false);
+            } catch (error) {
+                console.error("Error fetching data for stations", error)
+                setIsFetchingData(false);
+            }
+
+        };
+
+        fetchDataForStations();
+        const interval = setInterval(fetchDataForStations, MINUTE_MS);
+
+        return () => clearInterval(interval);
+    }, [setStationData]);
 
     const filteredStations = inputs.search
         ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
@@ -84,14 +132,15 @@ const Stations = () => {
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2] : filteredStations).map(station => (
-                        <Link key={station.Name} to={`/station-details/${station.Name}`} className=" hover:opacity-70">
+                        <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
                             <div className="bg-gray-100 rounded-md p-6 flex justify-center items-center">
                                 <div className="flex flex-col mr-3">
-                                    <h2 className="text-l font-bold text-gray-800">{station.Name}</h2>
-                                    <p className="text-l font-bold text-green-500">{station.State}</p>
+                                    <h2 className="text-l font-bold text-gray-800">{station?.Name}</h2>
+                                    <p className="text-l font-bold text-green-500">{station?.State}</p>
                                 </div>
                                 <div className="flex flex-col ml-5">
-                                    <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {station.EVEnergyCharged}kwH</p>
+                                    <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {station?.EVEnergyCharged}kwH</p>
+                                    <p className="text-sm text-gray-600 mb-2">{t('stations.totalEnergy')} {station?.EVTotalEnergyCharged}kwH</p>
                                     <p className="text-sm text-gray-600">{t('stations.power')}</p>
                                 </div>
                                 <div className="flex justify-end">

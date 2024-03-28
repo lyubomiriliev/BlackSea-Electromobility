@@ -63,9 +63,10 @@
     "stations": {
         "power": "Power 22kw",
         "charge": "Charge Power:",
-        "charged": "Energy charged",
+        "charged": "Energy charged:",
         "search": "Searching for stations",
-        "plugState": "Plug state"
+        "plugState": "Plug state",
+        "totalEnergy": "Total Charged:"
     },
     "map": {
         "title": "Charging stations map"
