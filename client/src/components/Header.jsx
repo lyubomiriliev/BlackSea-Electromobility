@@ -19,6 +19,7 @@ const Header = () => {
 
 
     const [showLanguage, setShowLanguage] = useState(false);
+    const [changeLanguageText, setChangeLanguageText] = useState("")
 
     const toggleLanguageMenu = () => setShowLanguage(!showLanguage);
 
@@ -42,12 +43,16 @@ const Header = () => {
         };
     }, [])
 
+    useEffect(() => {
+        setChangeLanguageText(i18n.language === 'en' ? "EN" : "BG")
+    }, [i18n.language])
+
 
 
     return (
         <div className="w-full h-20 bg-white shadow-md fixed top-0 left-0 z-50 flex justify-between items-center px-4">
             <div className="relative flex items-center">
-                <GrLanguage className="ml-5 text-secondary hover:text-primary hover:scale-125 duration-300 cursor-pointer" onClick={toggleLanguageMenu} />
+                <h2 onClick={toggleLanguageMenu} className="ml-5 text-secondary hover:text-primary duration-300 cursor-pointer font-bold ">{changeLanguageText}</h2>
                 {showLanguage && (
                     <div className="absolute top-10 -right-20 mt-2 py-2 w-32 bg-white border rounded shadow-lg z-10">
                         <button className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-primary" onClick={() => changeLanguage('en')}>

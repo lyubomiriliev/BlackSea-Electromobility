@@ -61,6 +61,7 @@
         "submit": "Save"
     },
     "stations": {
+        "title": "Charging stations",
         "power": "Power 22kw",
         "charge": "Charge Power:",
         "charged": "Energy charged:",

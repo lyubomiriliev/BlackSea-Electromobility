@@ -19,35 +19,35 @@ const Stations = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
-    const [newStationData, setNewStationData] = useState(null);
+    // const [newStationData, setNewStationData] = useState(null);
 
-    useEffect(() => {
-        const ws = new WebSocket(
-            "ws://www.ecarup.com/api/Ocpp16/BDBEC1617524E7AA/station1"
-        );
+    // useEffect(() => {
+    //     const ws = new WebSocket(
+    //         "ws://www.ecarup.com/api/Ocpp16/BDBEC1617524E7AA/22KW"
+    //     );
 
-        ws.onopen = () => {
-            console.log("WebSocket Connection Established!");
-        };
+    //     ws.onopen = () => {
+    //         console.log("WebSocket Connection Established!");
+    //     };
 
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log("Received data from WebSocket:", data);
-            setNewStationData(data);
-        };
+    //     ws.onmessage = (event) => {
+    //         const data = JSON.parse(event.data);
+    //         console.log("Received data from WebSocket:", data);
+    //         setNewStationData(data);
+    //     };
 
-        ws.onclose = () => {
-            console.log("WebSocket Connection Closed!");
-        };
+    //     ws.onclose = () => {
+    //         console.log("WebSocket Connection Closed!");
+    //     };
 
-        ws.onerror = (error) => {
-            console.error("WebSocket Error:", error);
-        };
+    //     ws.onerror = (error) => {
+    //         console.error("WebSocket Error:", error);
+    //     };
 
-        return () => {
-            ws.close();
-        };
-    }, []);
+    //     return () => {
+    //         ws.close();
+    //     };
+    // }, []);
 
     const [isFetchingData, setIsFetchingData] = useState(true);
 
@@ -101,7 +101,8 @@ const Stations = () => {
 
     return (
         <div className="w-full bg-white py-20 px-4">
-            <div className="flex justify-center mb-10 relative">
+            <div className="flex justify-center mb-5 relative">
+                <h1 className="text-2xl font-bold mt-10">{t('stations.title')}</h1>
                 {/* {newStationData ? (
                     <div>
                         {Object.entries(newStationData).map(([stationName, stationInfo]) => (
@@ -153,7 +154,7 @@ const Stations = () => {
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2] : filteredStations).map(station => (
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
-                            <div className="bg-gray-100 rounded-md p-2 flex justify-center items-center">
+                            <div className="bg-gray-100 rounded-md px-2 py-2 flex justify-center items-center">
                                 <div className="flex flex-col mr-3">
                                     <h2 className="text-l font-bold text-gray-800">{station?.Name}</h2>
                                     <p className="text-l font-bold text-green-500">{station?.State}</p>

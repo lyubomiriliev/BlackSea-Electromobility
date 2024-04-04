@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { MdClose } from "react-icons/md";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -33,9 +34,11 @@ const Home = () => {
         }
     }, [])
 
+
     useEffect(() => {
         const isMobile = window.innerWidth <= 768;
         const isLoggedIn = localStorage.getItem("user-info");
+
         if (isMobile) {
             const mobileModalShown = localStorage.getItem('mobileModalShown');
             if (!mobileModalShown) {
@@ -51,9 +54,22 @@ const Home = () => {
                 }
             }
         }
+        const isStandalone = window.matchMedia('(display-mode: standalone').matches;
 
+        if (!isStandalone && isMobile) {
+            const mobileModalShown = localStorage.getItem("mobileModalShown");
+            if (!mobileModalShown) {
+                setShowMobileModal(true);
+                localStorage.setItem('mobileModalShown', true);
+            }
+        } else {
+            if (isStandalone) {
+                setShowMobileModal(false)
+            }
+        }
 
     }, [])
+
 
     return (
         <div className="max-w-screen-2xl mx-auto my-10 py-20 flex flex-col items-center justify-center text-center">
@@ -61,23 +77,43 @@ const Home = () => {
             <h1 className="text-2xl font-bold mb-6">{t('home.title')}</h1>
             <h2 className="text-xl font-medium mb-6">{t('home.partners')}</h2>
             <div className="flex flex-wrap justify-center gap-4 mb-6">
-                <img className="w-24" src={primorsko} alt="primorsko" />
-                <img className="w-24" src={byalaLogo} alt="byalaLogo" />
-                <img className="w-24" src={chiflikLogo} alt="chiflikLogo" />
-                <img className="w-24" src={dulgopolLogo} alt="dulgopolLogo" />
-                <img className="w-24" src={kavarnaLogo} alt="kavarnaLogo" />
-                <img className="w-24" src={neseburLogo} alt="neseburLogo" />
+                <Link to="https://primorsko.bg/">
+                    <img className="w-24" src={primorsko} alt="primorsko" />
+                </Link>
+                <Link to="https://www.byala.org/">
+                    <img className="w-24" src={byalaLogo} alt="byalaLogo" />
+                </Link>
+                <Link to="https://dolnichiflik.bg/wps/portal/municipality-dolni-chiflik/home">
+                    <img className="w-24" src={chiflikLogo} alt="chiflikLogo" />
+                </Link>
+                <Link to="https://www.dalgopol.bg/">
+                    <img className="w-24" src={dulgopolLogo} alt="dulgopolLogo" />
+                </Link>
+                <Link to="https://www.kavarna.bg/">
+                    <img className="w-24" src={kavarnaLogo} alt="kavarnaLogo" />
+                </Link>
+                <Link to="https://www.nesebar.bg/">
+                    <img className="w-24" src={neseburLogo} alt="neseburLogo" />
+                </Link>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-5">
-                <img className="w-24" src={abchoPNG} alt="abchoLogo" />
-                <img className="w-24" src={okolnaSreda} alt="okolnaSreda" />
-                <img className="w-24" src={norwayLogo} alt="norwayLogo" />
-                <img className="w-24 h-20 mt-3" src={smartNorwayLogo} alt="smartNorwayLogo" />
+                <Link to="https://www.ubbsla.org/">
+                    <img className="w-24" src={abchoPNG} alt="abchoLogo" />
+                </Link>
+                <Link to="https://pudoos.bg/">
+                    <img className="w-24" src={okolnaSreda} alt="okolnaSreda" />
+                </Link>
+                <Link to="https://www.eeagrants.bg/bg/2009-2014/%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%b8">
+                    <img className="w-24" src={norwayLogo} alt="norwayLogo" />
+                </Link>
+                <Link to="https://smartinnovationnorway.com/en/">
+                    <img className="w-24 h-20 mt-3" src={smartNorwayLogo} alt="smartNorwayLogo" />
+                </Link>
             </div>
 
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-filter backdrop-blur-sm bg-opacity-50 bg-gray-800">
-                    <div className="bg-white rounded-lg md:py-20 px-20 lg: py-20 relative" ref={modalRef}>
+                    <div className="bg-white rounded-lg md:py-20 px-20 lg: py-10 relative" ref={modalRef}>
                         <img className="mx-auto" src={BlackSeaLogo} alt="" />
                         <h2 className="text-xl font-bold mb-4">Моля отворете сайта на мобилно устройство.</h2>
                         <p>Инсталиране като апликация се поддържа само на iOS и Android.</p>

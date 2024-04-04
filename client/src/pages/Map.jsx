@@ -14,7 +14,8 @@ const Map = () => {
                             <iframe
                                 className="w-full object-cover"
                                 src="https://www.google.com/maps/d/u/1/embed?mid=147Etk3f3S7kgZ22_iRuCEuJi9Rb-ueM&ehbc=2E312F&noprof=1"
-                                height="550"
+                                height="600"
+                                allowFullScreen
                             ></iframe>
                         </div>
                     </div>
