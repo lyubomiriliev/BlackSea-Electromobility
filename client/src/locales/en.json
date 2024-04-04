@@ -32,7 +32,8 @@
         "register": "Register",
         "haveProfile": "Already have an account? Login from here",
         "success": "Registered Successfully",
-        "fail": "Registration failed."
+        "fail": "Registration failed.",
+        "selectCountry": "Choose your country"
 
     },
     "registerError": {
@@ -58,7 +59,8 @@
         "newPassword": "New password",
         "repeatNewPassword": "Repeat new password",
         "phone": "Phone number",
-        "submit": "Save"
+        "submit": "Save",
+        "country": "Country"
     },
     "stations": {
         "title": "Charging stations",

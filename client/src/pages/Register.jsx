@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { useTranslation } from 'react-i18next';
 import i18n from "../i18n";
+import { FaFlag } from "react-icons/fa";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -22,6 +23,7 @@ const Register = () => {
         password: "",
         repeatPassword: "",
         phone: "",
+        country: "",
     });
 
     const [errors, setErrors] = useState({
@@ -31,10 +33,13 @@ const Register = () => {
         password: "",
         repeatPassword: "",
         phone: "",
+        country: "",
     });
 
     const [showPassword, setShowPassword] = useState(false);
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+    const countries = ["Bulgaria", "Greece", "Türkiye", "North Macedonia", "Albania", "Montenegro", "Kosovo", "Serbia", "Croatia", "Romania", "Slovenia", "Bosnia and Herzegovina"];
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -319,7 +324,28 @@ const Register = () => {
                                             </label>
                                             {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
                                         </div>
-
+                                        <div className="relative">
+                                            <select
+                                                required
+                                                id="country"
+                                                name="country"
+                                                className="input-field border border-gray-300 rounded-md mb-5 px-2 py-2 w-full focus:outline-none focus:border-primary"
+                                                onChange={handleInputChange}
+                                            >
+                                                <option value="">{t('register.selectCountry')}</option>
+                                                {countries.map((country, index) => (
+                                                    <option key={index} value={country}>
+                                                        {country}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <label
+                                                className={`absolute left-4 -mt-3 transition-all duration-300 ${inputs.country ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                                                    }`}
+                                                htmlFor="country"
+                                            >
+                                            </label>
+                                        </div>
                                     </div>
                                     <Link to="/login">
                                         <button className="flex mx-auto py-2 text-secondary font-bold">{t("register.haveProfile")}</button>

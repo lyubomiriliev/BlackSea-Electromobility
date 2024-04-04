@@ -192,6 +192,23 @@ const Profile = () => {
                 </div>
                 <div className="relative mb-5">
                     <input
+                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                        type="country"
+                        name="country"
+                        value={authUser.country}
+                        onChange={handleInputChange}
+                        disabled
+                    />
+                    <label
+                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                            }`}
+                        htmlFor="email"
+                    >
+                        {t('profile.country')}
+                    </label>
+                </div>
+                <div className="relative mb-5">
+                    <input
                         className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type="text"
                         name="name"
