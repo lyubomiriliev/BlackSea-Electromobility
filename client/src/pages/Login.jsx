@@ -166,7 +166,7 @@ const Login = () => {
             <div className="min-h-screen flex justify-center bg-gray-50 py-1 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
-                        <img className="mx-auto h-40 w-auto" src={BlackSeaLogo} alt="mainLogo" />
+                        <img className="h-40 w-auto mx-auto" src={BlackSeaLogo} alt="mainLogo" />
                         <h1 className="mt-6 text-center text-4xl font-bold text-gray-900">{t('login.welcome')}</h1>
                         <div className="mt-6">
                             <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>

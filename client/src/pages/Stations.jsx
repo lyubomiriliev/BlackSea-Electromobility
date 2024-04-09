@@ -102,7 +102,7 @@ const Stations = () => {
     return (
         <div className="w-full bg-white py-20 px-4">
             <div className="flex justify-center mb-5 relative">
-                <h1 className="text-2xl font-bold mt-10">{t('stations.title')}</h1>
+                <h1 className="text-2xl font-bold font-heading mt-10">{t('stations.title')}</h1>
                 {/* {newStationData ? (
                     <div>
                         {Object.entries(newStationData).map(([stationName, stationInfo]) => (
@@ -119,7 +119,7 @@ const Stations = () => {
             <div className="xl:w-1/3 mx-auto md:w-2/3 relative flex">
                 <FaSearch className=" mt-3 text-primary scale-150" />
                 <input
-                    className="input-field border bg-white border-gray-300 rounded-md mb-5 ml-3 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                    className="input-field border font-body bg-white border-gray-300 rounded-md mb-5 ml-3 px-4 py-2 w-full focus:outline-none focus:border-primary"
                     type="search"
                     name="search"
                     value={inputs.search}
@@ -128,7 +128,7 @@ const Stations = () => {
                     onBlur={() => setSearchFocused(false)}
                 />
                 <label
-                    className={`absolute left-10 -mt-3 transition-all ml-3 duration-300 ${isSearchFocused || inputs.search ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-0 -mt-3 translate-y-5 text-gray-400'
+                    className={`absolute left-10 font-body -mt-3 transition-all ml-3 duration-300 ${isSearchFocused || inputs.search ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-0 -mt-3 translate-y-5 text-gray-400'
                         }`}
                     htmlFor="search"
                 >
@@ -156,13 +156,13 @@ const Stations = () => {
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
                             <div className="bg-gray-100 rounded-md px-2 py-2 flex justify-center items-center">
                                 <div className="flex flex-col mr-3">
-                                    <h2 className="text-l font-bold text-gray-800">{station?.Name}</h2>
-                                    <p className="text-l font-bold text-green-500">{station?.State}</p>
+                                    <h2 className="text-l font-bold font-body text-gray-800">{station?.Name}</h2>
+                                    <p className="text-l font-bold font-body text-green-500">{station?.State}</p>
                                 </div>
                                 <div className="flex flex-col ml-5">
-                                    <p className="text-sm text-gray-600 mb-2">{t('stations.charge')} {station?.EVEnergyCharged}kwH</p>
-                                    <p className="text-sm text-gray-600 mb-2">{t('stations.totalEnergy')} {station?.EVTotalEnergyCharged}kwH</p>
-                                    <p className="text-sm text-gray-600">{t('stations.power')}</p>
+                                    <p className="text-sm text-gray-600 font-body mb-2">{t('stations.charge')} {station?.EVEnergyCharged}kwH</p>
+                                    <p className="text-sm text-gray-600 font-body mb-2">{t('stations.totalEnergy')} {station?.EVTotalEnergyCharged}kwH</p>
+                                    <p className="text-sm text-gray-600 font-body">{t('stations.power')}</p>
                                 </div>
                                 <div className="flex justify-end">
                                     <img className=" w-20 h-auto" src={chargingStationSVG} alt="stationIcon" />

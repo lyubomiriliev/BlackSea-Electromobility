@@ -3,7 +3,15 @@
     "logout": "Logout",
     "home": {
         "title": "BLACK SEA ELECTROMOBILITY",
-        "partners": "PARTNERS"
+        "partners": "PARTNERS",
+        "subheading": "PUBLIC CHARGING STATIONS",
+        "locations": "LOCATIONS:",
+        "publicStations": "Electric mobility and the popularity of electric passenger vehicles has been growing rapidly over the last decade and this trend doesn’t show any signs of slowing down.",
+        "muncipalities": "Municipalities: Primorsko, Byala, Dolni Chiflik, Dulgopol, Kavarna and Nessebar",
+        "stationType": "STATION TYPE",
+        "stationInfo": "EV-CCS charging column up to 22kW with one or two charging contacts. TYPE 2.",
+        "freeCharge": "FREE OF CHARGE",
+        "freeChargeDesc": "Charging from the 22kW municipal charging stations is completely free"
     },
     "login": {
         "welcome": "Welcome!",
@@ -63,7 +71,7 @@
         "country": "Country"
     },
     "stations": {
-        "title": "Charging stations",
+        "title": "CHARGING STATIONS",
         "power": "Power 22kw",
         "charge": "Charge Power:",
         "charged": "Energy charged:",
@@ -72,7 +80,7 @@
         "totalEnergy": "Total Charged:"
     },
     "map": {
-        "title": "Charging stations map"
+        "title": "CHARGING STATIONS MAP"
     },
     "forgotPassword": {
         "title": "Reset your password",

@@ -170,10 +170,10 @@ const Profile = () => {
     return (
         <div className="bg-white py-40 px-4">
             <div className="max-w-screen-md mx-auto">
-                <h1 className="text-3xl font-bold mb-6">{t('profile.title')}</h1>
+                <h1 className="text-3xl font-heading font-medium mb-6">{t('profile.title')}</h1>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
                         type="email"
                         name="email"
                         value={authUser.email}
@@ -183,7 +183,7 @@ const Profile = () => {
                         disabled
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute font-body left-4 -mt-3 transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="email"
                     >
@@ -192,7 +192,7 @@ const Profile = () => {
                 </div>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary focus:placeholder-transparent"
                         type="country"
                         name="country"
                         value={authUser.country}
@@ -200,7 +200,7 @@ const Profile = () => {
                         disabled
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 -mt-3 font-body transition-all duration-300 ${isEmailFocused || authUser.email ? 'top-1 text-sm bg-white px-2 text-gray-400' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="email"
                     >
@@ -209,7 +209,7 @@ const Profile = () => {
                 </div>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type="text"
                         name="name"
                         value={inputs.name}
@@ -218,17 +218,17 @@ const Profile = () => {
                         onBlur={handleInputBlur}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNameFocused || inputs.name ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 -mt-3 font-body transition-all duration-300 ${isNameFocused || inputs.name ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
                         {t('profile.name')}
                     </label>
-                    {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
+                    {errors.name && <p className="text-red-500 font-body text-xs">{errors.name}</p>}
                 </div>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type="text"
                         name="surname"
                         value={inputs.surname}
@@ -237,17 +237,17 @@ const Profile = () => {
                         onBlur={handleInputBlur}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isSurnameFocused || inputs.surname ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
                         {t('profile.surname')}
                     </label>
-                    {errors.surname && <p className="text-red-500 text-xs">{errors.surname}</p>}
+                    {errors.surname && <p className="text-red-500 font-body text-xs">{errors.surname}</p>}
                 </div>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type="text"
                         name="phone"
                         value={inputs.phone}
@@ -256,18 +256,18 @@ const Profile = () => {
                         onBlur={handleInputBlur}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isPhoneFocused || inputs.phone ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isPhoneFocused || inputs.phone ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
                         {t('profile.phone')}
                     </label>
-                    {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+                    {errors.phone && <p className="text-red-500 font-body text-xs">{errors.phone}</p>}
                 </div>
-                <h1 className="text-3xl font-bold mb-6">{t('profile.changePassword')}</h1>
+                <h1 className="text-3xl font-medium font-heading mb-6">{t('profile.changePassword')}</h1>
                 <div className="relative mb-5">
                     <input
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type={showNewPassword ? "text" : "password"}
                         name="newPassword"
                         onChange={handleInputChange}
@@ -275,39 +275,39 @@ const Profile = () => {
                         onBlur={handleInputBlur}
                     />
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
                         {t('profile.newPassword')}
                     </label>
-                    {errors.newPassword && <p className="text-red-500 text-xs">{errors.newPassword}</p>}
+                    {errors.newPassword && <p className="text-red-500 font-body text-xs">{errors.newPassword}</p>}
                     <button type="button" onClick={toggleNewPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                         {showNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                 </div>
                 <div className="relative mb-5">
                     <input required
-                        className="input-field border border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                        className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
                         type={showrepeatNewPassword ? "text" : "password"}
                         name="repeatNewPassword"
                         onChange={handleInputChange}
                         onFocus={() => setRepeatNewPasswordFocused(true)}
                         onBlur={handleInputBlur}
                     />
-                    <button type="button" onClick={togglerepeatNewPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                    <button type="button" onClick={togglerepeatNewPasswordVisibility} className="absolute  inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                         {showrepeatNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                     <label
-                        className={`absolute left-4 -mt-3 transition-all duration-300 ${isrepeatNewPasswordFocused || inputs.repeatNewPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isrepeatNewPasswordFocused || inputs.repeatNewPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
                         htmlFor="name"
                     >
                         {t('profile.repeatNewPassword')}
                     </label>
-                    {errors.repeatNewPassword && <p className="text-red-500 text-xs">{errors.repeatNewPassword}</p>}
+                    {errors.repeatNewPassword && <p className="text-red-500 font-body text-xs">{errors.repeatNewPassword}</p>}
                 </div>
-                <button onClick={handleEditProfile} className="bg-secondary text-white py-3 px-8 rounded-md hover:bg-primary duration-300 mt-6 w-1/3">{t('profile.submit')}</button>
+                <button onClick={handleEditProfile} className="bg-secondary text-white py-3 px-8 rounded-md hover:bg-primary duration-300 font-body mt-6 w-1/3">{t('profile.submit')}</button>
                 <div className="flex items-center mt-6">
                 </div>
             </div>

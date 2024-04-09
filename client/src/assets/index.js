@@ -34,6 +34,14 @@ import whiteStations1 from "../assets/white/whiteStations1.svg";
 import popUp from "../assets/popUp.svg";
 import popUp2 from "../assets/popUp2.png";
 
+import BulgariaFlag from "../assets/flags/BulgariaFlag.png";
+import GreeceFlag from "../assets/flags/GreeceFlag.svg";
+
+import HeroSectionCar from "../assets/homeImages/Untitled-1.png";
+import Cost from "../assets/homeImages/cost.png";
+import Map from "../assets/homeImages/map.png";
+import Type from "../assets/homeImages/type.png";
+
 export {
   logoBlackSea,
   qrCode,
@@ -68,4 +76,10 @@ export {
   whiteStations1,
   popUp,
   popUp2,
+  BulgariaFlag,
+  GreeceFlag,
+  HeroSectionCar,
+  Cost,
+  Map,
+  Type,
 };

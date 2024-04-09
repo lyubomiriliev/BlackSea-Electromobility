@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom"
-import { logoBlackSea } from "../assets"
+import { BlackSeaLogo, logoBlackSea } from "../assets"
 import useSignUpWithEmailAndPassword from "../hooks/useSignUpWithEmailAndPassword"
 import { useState } from "react";
 
 import { useTranslation } from 'react-i18next';
 import i18n from "../i18n";
-import { FaFlag } from "react-icons/fa";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Home from "./Home.jsx";
+
 
 const Register = () => {
 
@@ -40,6 +41,7 @@ const Register = () => {
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
     const countries = ["Bulgaria", "Greece", "Türkiye", "North Macedonia", "Albania", "Montenegro", "Kosovo", "Serbia", "Croatia", "Romania", "Slovenia", "Bosnia and Herzegovina"];
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -110,6 +112,7 @@ const Register = () => {
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -192,8 +195,10 @@ const Register = () => {
             <div className="min-h-screen flex justify-center bg-gray-50 py-1 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
-                        <img className="mx-auto h-40" src={logoBlackSea} alt="mainLogo" />
-                        <h1 className=" text-center text-2xl font-bold text-gray-900">{t("register.create")}</h1>
+                        <Link to="/">
+                            <img className="h-40 w-auto mx-auto" src={BlackSeaLogo} alt="mainLogo" />
+                        </Link>
+                        <h1 className="text-center text-2xl font-bold text-gray-900">{t("register.create")}</h1>
                         <div className="mb-10">
                             <div className="flex flex-col">
                                 <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>
