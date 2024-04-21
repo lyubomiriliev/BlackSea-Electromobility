@@ -68,7 +68,8 @@
         "repeatNewPassword": "Repeat new password",
         "phone": "Phone number",
         "submit": "Save",
-        "country": "Country"
+        "country": "Country",
+        "hello": "Hello,"
     },
     "stations": {
         "title": "CHARGING STATIONS",
@@ -78,6 +79,15 @@
         "search": "Searching for stations",
         "plugState": "Plug state",
         "totalEnergy": "Total Charged:"
+    },
+    "stationDetails":{
+        "type": "TYPE 2",
+        "power": "Power 22 kW",
+        "totalEnergy": "Total Charged:",
+        "charged": "Energy charged:",
+        "chargePower": "Charge Power:",
+        "plugState": "Plug state:",
+        "location": "Location:"
     },
     "map": {
         "title": "CHARGING STATIONS MAP"

@@ -168,8 +168,9 @@ const Profile = () => {
 
 
     return (
-        <div className="bg-white py-40 px-4">
+        <div className="bg-white py-28 px-4">
             <div className="max-w-screen-md mx-auto">
+                <h1 className="text-4xl font-heading font-light mb-10">{t('profile.hello')} <span className="text-secondary">{authUser?.name}</span></h1>
                 <h1 className="text-3xl font-heading font-medium mb-6">{t('profile.title')}</h1>
                 <div className="relative mb-5">
                     <input

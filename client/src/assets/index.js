@@ -42,6 +42,8 @@ import Cost from "../assets/homeImages/cost.png";
 import Map from "../assets/homeImages/map.png";
 import Type from "../assets/homeImages/type.png";
 
+import Type2 from "../assets/white/type2png.png";
+
 export {
   logoBlackSea,
   qrCode,
@@ -82,4 +84,5 @@ export {
   Cost,
   Map,
   Type,
+  Type2,
 };

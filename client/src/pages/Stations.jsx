@@ -11,7 +11,7 @@ const Stations = () => {
 
     const { t } = useTranslation();
 
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData } = useStationStore();
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2 } = useStationStore();
     const [inputs, setInputs] = useState({ search: "" })
     const [isSearchFocused, setSearchFocused] = useState(false);
 
@@ -19,35 +19,6 @@ const Stations = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
-    // const [newStationData, setNewStationData] = useState(null);
-
-    // useEffect(() => {
-    //     const ws = new WebSocket(
-    //         "ws://www.ecarup.com/api/Ocpp16/BDBEC1617524E7AA/22KW"
-    //     );
-
-    //     ws.onopen = () => {
-    //         console.log("WebSocket Connection Established!");
-    //     };
-
-    //     ws.onmessage = (event) => {
-    //         const data = JSON.parse(event.data);
-    //         console.log("Received data from WebSocket:", data);
-    //         setNewStationData(data);
-    //     };
-
-    //     ws.onclose = () => {
-    //         console.log("WebSocket Connection Closed!");
-    //     };
-
-    //     ws.onerror = (error) => {
-    //         console.error("WebSocket Error:", error);
-    //     };
-
-    //     return () => {
-    //         ws.close();
-    //     };
-    // }, []);
 
     const [isFetchingData, setIsFetchingData] = useState(true);
 
@@ -96,25 +67,13 @@ const Stations = () => {
     }, [setStationData]);
 
     const filteredStations = inputs.search
-        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
-        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2].filter(station => station);
+        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
+        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2].filter(station => station);
 
     return (
         <div className="w-full bg-white py-20 px-4">
             <div className="flex justify-center mb-5 relative">
                 <h1 className="text-2xl font-bold font-heading mt-10">{t('stations.title')}</h1>
-                {/* {newStationData ? (
-                    <div>
-                        {Object.entries(newStationData).map(([stationName, stationInfo]) => (
-                            <div key={stationName}>
-                                <h2>{stationName}</h2>
-                                <p>State: {stationInfo.State}</p>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )} */}
             </div>
             <div className="xl:w-1/3 mx-auto md:w-2/3 relative flex">
                 <FaSearch className=" mt-3 text-primary scale-150" />
@@ -152,10 +111,24 @@ const Stations = () => {
             ) : (
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2] : filteredStations).map(station => (
+                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2] : filteredStations).map(station => (
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
-                            <div className="bg-gray-100 rounded-md px-2 py-2 flex justify-center items-center">
-                                <div className="flex flex-col mr-3">
+                            <div className="w-96 h-60 relative">
+                                <div className="w-80 h-60 relative">
+                                    <div className="w-96 h-60 left-0 top-0 absolute rounded-bl-2xl rounded-tr-2xl bg-sky-400" />
+                                    <h1 className="left-[11px] top-[51px] absolute text-center text-white text-3xl font-bold font-heading capitalize">{station?.Name}</h1>
+                                    <h2 className="left-[14px] top-[172px] absolute text-center text-white text-l font-medium font-body">Charge Power: {station?.EVEnergyCharged} kwH</h2>
+                                    <h2 className="left-[14px] top-[207px] absolute text-center text-white text-l font-medium font-body">Total Charged: {station?.EVTotalEnergyCharged} kwH</h2>
+                                    <h2 className="left-[14px] top-[137px] absolute text-center text-white text-l font-medium font-body">Power: 22 kw</h2>
+                                    <div className="w-56 h-9 left-0 top-0 absolute">
+                                        <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
+                                        <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{station?.State}</h1>
+                                    </div>
+                                    <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
+                                </div>
+
+
+                                {/* <div className="flex flex-col mr-3">
                                     <h2 className="text-l font-bold font-body text-gray-800">{station?.Name}</h2>
                                     <p className="text-l font-bold font-body text-green-500">{station?.State}</p>
                                 </div>
@@ -166,9 +139,20 @@ const Stations = () => {
                                 </div>
                                 <div className="flex justify-end">
                                     <img className=" w-20 h-auto" src={chargingStationSVG} alt="stationIcon" />
-                                </div>
+                                </div> */}
                             </div>
-
+                            {/* <div className="w-80 h-60 relative mt-10">
+                                <div className="w-96 h-60 left-0 top-0 absolute rounded-bl-2xl rounded-tr-2xl bg-sky-400" />
+                                <h1 className="left-[11px] top-[51px] absolute text-center text-white text-3xl font-bold font-heading capitalize">{station?.Name}</h1>
+                                <h2 className="left-[14px] top-[172px] absolute text-center text-white text-l font-medium font-body">Charge Power: {station?.EVEnergyCharged} kwH</h2>
+                                <h2 className="left-[14px] top-[207px] absolute text-center text-white text-l font-medium font-body">Total Charged: {station?.EVTotalEnergyCharged} kwH</h2>
+                                <h2 className="left-[14px] top-[137px] absolute text-center text-white text-l font-medium font-body">Power: 22 kw</h2>
+                                <div className="w-56 h-9 left-0 top-0 absolute">
+                                    <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
+                                    <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{station?.State}</h1>
+                                </div>
+                                <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
+                            </div> */}
 
                         </Link>
                     ))}
