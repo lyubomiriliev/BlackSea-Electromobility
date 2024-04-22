@@ -145,16 +145,31 @@ const Home = () => {
                 <Link to="https://www.ubbsla.org/">
                     <img className="w-20" src={abchoPNG} alt="abchoLogo" />
                 </Link>
-                <Link to="https://pudoos.bg/">
-                    <img className="w-20" src={okolnaSreda} alt="okolnaSreda" />
-                </Link>
-                <Link to="https://www.eeagrants.bg/bg/2009-2014/%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%b8">
-                    <img className="w-20" src={norwayLogo} alt="norwayLogo" />
-                </Link>
                 <Link to="https://smartinnovationnorway.com/en/">
                     <img className="w-20 h-20 mt-3" src={smartNorwayLogo} alt="smartNorwayLogo" />
                 </Link>
             </div>
+            <div className="flex flex-col">
+                <div className="flex justify-center items-center gap-10 mt-10">
+                    <Link to="https://pudoos.bg/">
+                        <img className="w-20" src={okolnaSreda} alt="okolnaSreda" />
+                    </Link>
+                    <h2>Програма "Опазване на околната среда и климатични промени"</h2>
+                    <Link to="https://www.eeagrants.bg/bg/2009-2014/%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%b8">
+                        <img className="w-20" src={norwayLogo} alt="norwayLogo" />
+                    </Link>
+                </div>
+                <div className="w-1/3 mx-auto mt-5">
+                    <p>Апликацията е създадена в рамките на проект „Черноморска Електромобилност“, финансиран по Договор за предоставяне на БФП № Д-33-9/31.03.2023г., който се осъществява с финансовата подкрепа на Програма “Опазване на околната среда и климатични промени” на Финансовия механизъм на Европейското икономическо пространство 2014-2021</p>
+                </div>
+                <div>
+                    <h2 className="font-bold text-lg mt-4">Работим заедно за <span className="text-green-600">по-зелена</span>, <span className="text-red-600">по-конкурентна</span> и  <span className="text-blue-600">по-приобщаваща</span> Европа!</h2>
+                </div>
+                <Link to="https://www.eeagrants.bg">
+                    <p className="text-blue-600 cursor-pointer mt-4">https://www.eeagrants.bg</p>
+                </Link>
+            </div>
+
             {showModal && (
 
                 <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-filter backdrop-blur-sm bg-opacity-50 bg-gray-800">
