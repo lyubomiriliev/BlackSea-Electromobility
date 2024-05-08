@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BlackSeaLogo, Cost, HeroSectionCar, Map, Type, abchoPNG, byalaLogo, chiflikLogo, dulgopolLogo, kavarnaLogo, neseburLogo, norwayLogo, okolnaSreda, popUp, popUp2, primorsko, smartNorwayLogo } from "../assets"
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { MdClose } from "react-icons/md";
 import { useEffect } from "react";
@@ -76,13 +76,13 @@ const Home = () => {
 
     return (
         <div className="w-full mx-auto my-10 py-20 px-5 flex flex-col items-center justify-center text-center">
-            <h1 className="text-center text-secondary text-4xl font-bold font-heading">{t('home.title')}</h1>
+            <h1 className="text-center w-96 mb-2 text-secondary text-4xl font-bold font-heading">{t('home.title')}</h1>
             <div className="w-full md:w-2/3 relative">
                 <div className="md:absolute md:left-0 md:w-1/2 md:mt-10 md:ml-10 flex flex-col text-left">
                     <div className="flex items-center mt-10 mb-5">
-                        <h2 className="w-full text-2xl font-medium font-heading">{t('home.subheading')}</h2>
+                        <h2 className="w-full text-secondary text-2xl font-bold font-heading">{t('home.subheading')}</h2>
                     </div>
-                    <p className="md:w-2/3 font-body font-light">{t('home.publicStations')}</p>
+                    <p className="md:w-3/5 font-body font-light text-xl">{t('home.publicStations')}</p>
                 </div>
                 <div className="w-full flex justify-center md:justify-end">
                     <img onClick={navigateToStations} className="w-full md:w-2/3 h-auto object-cover mt-5 relative cursor-pointer" src={HeroSectionCar} alt="Car Charging" />
@@ -93,11 +93,12 @@ const Home = () => {
                     <div className="flex items-start mb-5">
                         <div className="flex items-center">
                             <img src={Map} className="w-16 h-16" alt="" />
-                            <h2 className="text-xl font-medium ml-2 font-heading">{t('home.locations')}</h2>
+                            <h2 className="text-xl font-medium ml-2 fo font-heading">{t('home.locations')}</h2>
                         </div>
                     </div>
                     <p className="text-sm text-left font-body font-light">{t('home.muncipalities')}</p>
                 </div>
+                <div className="md:h-24 md:bg-black w-[1px] md:mt-5"></div>
                 <div className="w-full md:w-1/3 flex-col">
                     <div className="flex items-start mb-5">
                         <div className="flex items-center">
@@ -107,6 +108,7 @@ const Home = () => {
                     </div>
                     <p className="text-sm text-left font-body font-light">{t('home.stationInfo')}</p>
                 </div>
+                <div className="md:h-24 md:bg-black w-[1px] md:mt-5"></div>
                 <div className="w-full md:w-1/3 flex-col">
                     <div className="flex items-start mb-5">
                         <div className="flex items-center">
@@ -149,21 +151,28 @@ const Home = () => {
                     <img className="w-20 h-20 mt-3" src={smartNorwayLogo} alt="smartNorwayLogo" />
                 </Link>
             </div>
-            <div className="flex flex-col">
+            <div className="w-full flex flex-col md:w-1/3">
                 <div className="flex justify-center items-center gap-10 mt-10">
                     <Link to="https://pudoos.bg/">
                         <img className="w-20" src={okolnaSreda} alt="okolnaSreda" />
                     </Link>
-                    <h2>Програма "Опазване на околната среда и климатични промени"</h2>
+                    <h2>{t('home.program')}</h2>
                     <Link to="https://www.eeagrants.bg/bg/2009-2014/%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%b8">
                         <img className="w-20" src={norwayLogo} alt="norwayLogo" />
                     </Link>
                 </div>
-                <div className="w-1/3 mx-auto mt-5">
-                    <p>Апликацията е създадена в рамките на проект „Черноморска Електромобилност“, финансиран по Договор за предоставяне на БФП № Д-33-9/31.03.2023г., който се осъществява с финансовата подкрепа на Програма “Опазване на околната среда и климатични промени” на Финансовия механизъм на Европейското икономическо пространство 2014-2021</p>
+                <div className="mx-auto mt-5">
+                    <p>{t('home.programDesc')}</p>
                 </div>
                 <div>
-                    <h2 className="font-bold text-lg mt-4">Работим заедно за <span className="text-green-600">по-зелена</span>, <span className="text-red-600">по-конкурентна</span> и  <span className="text-blue-600">по-приобщаваща</span> Европа!</h2>
+                    <h2 className="font-bold text-lg mt-4">
+                        <Trans i18nKey="home.workTogether">
+                            Работим заедно за
+                            <span className="text-green-600">по-зелена</span>
+                            <span className="text-red-600">по-конкурентна</span>
+                            <span className="text-blue-600">по-приобщаваща</span> Европа!
+                        </Trans>
+                    </h2>
                 </div>
                 <Link to="https://www.eeagrants.bg">
                     <p className="text-blue-600 cursor-pointer mt-4">https://www.eeagrants.bg</p>

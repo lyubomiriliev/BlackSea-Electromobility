@@ -2,7 +2,7 @@
     "searchPlaceholder": "Search for stations",
     "logout": "Logout",
     "home": {
-        "title": "BLACK SEA ELECTROMOBILITY",
+        "title": "BLACKSEA ELECTROMOBILITY",
         "partners": "PARTNERS",
         "subheading": "PUBLIC CHARGING STATIONS",
         "locations": "LOCATIONS:",
@@ -11,7 +11,10 @@
         "stationType": "STATION TYPE",
         "stationInfo": "EV-CCS charging column up to 22kW with one or two charging contacts. TYPE 2.",
         "freeCharge": "FREE OF CHARGE",
-        "freeChargeDesc": "Charging from the 22kW municipal charging stations is completely free"
+        "freeChargeDesc": "Charging from the 22kW municipal charging stations is completely free",
+        "program": "Program 'Environmental Protection and Climate Change'",
+        "programDesc": "The application was created within the framework of the project BGENVIRONMENT-4.004-0010 'Black Sea Electromobility', financed under the Agreement for the provision of BFP No. D-33-9/31.03.2023, which is implemented with the financial support of the Program 'Environmental Protection and climate change' of the Financial Mechanism of the European Economic Area 2014-2021",
+        "workTogether": "Working together for <1>greener</1>, <2>more competitive</2>, and <3>more inclusive</3> Europe!"
     },
     "login": {
         "welcome": "Welcome!",

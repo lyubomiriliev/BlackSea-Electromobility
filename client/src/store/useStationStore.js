@@ -51,7 +51,7 @@ export const useStationStore = create((set) => ({
     EVTotalEnergyCharged: "20410",
   },
   stationKavarna1: {
-    stationCode: 6631,
+    stationCode: 7331,
     Name: "Каварна 1",
     State: "Ready to Charge",
     EVEnergyCharged: "1096",
@@ -64,19 +64,10 @@ export const useStationStore = create((set) => ({
     EVEnergyCharged: "1096",
     EVTotalEnergyCharged: "33300",
   },
-  stationNesebar1: {
-    stationCode: 4441,
-    Name: "Несебър 1",
-    State: "Ready to Charge",
-    EVEnergyCharged: "0",
-    EVTotalEnergyCharged: "3670",
-  },
-  stationNesebar2: {
-    stationCode: 4443,
-    Name: "Несебър 2",
-    State: "Ready to Charge",
-    EVEnergyCharged: "0",
-    EVTotalEnergyCharged: "10204",
+  stationNesebar: {
+    stationCode: 7441,
+    Name: "Несебър",
+    State: "",
   },
   setStationData: (data) => {
     set((state) => ({

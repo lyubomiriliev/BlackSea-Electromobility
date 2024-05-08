@@ -11,9 +11,11 @@ const Stations = () => {
 
     const { t } = useTranslation();
 
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2 } = useStationStore();
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar } = useStationStore();
     const [inputs, setInputs] = useState({ search: "" })
     const [isSearchFocused, setSearchFocused] = useState(false);
+
+    const [newStationData, setNewStationData] = useState(null);
 
     const handleInputChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -35,7 +37,8 @@ const Stations = () => {
     }, [])
 
 
-    const MINUTE_MS = 60000;
+
+    const MINUTE_MS = 6000000;
 
     const stationCodes = [3736, 2946, 3805, 4380]
 
@@ -61,14 +64,109 @@ const Stations = () => {
         };
 
         fetchDataForStations();
+
+        const fetchNewStation = async () => {
+            try {
+                const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YTkyMzc4MS04MjE1LTQwYjMtOGU3ZS04ZmI2YjNlZTA1MTUiLCJqdGkiOiJmNzFkZWZlZTFiYzdkYjRmMjM4ODMzMzllMTUwNzViODQxZDA5YzJiMmM3ZGRiMjVjMjlkNjg3ZjU3MTZmZWUxZWY4MmMwZWU2ZDQ0ZmM4OCIsImlhdCI6MTcxNDUwMDU2Ny45NDU2MjYsIm5iZiI6MTcxNDUwMDU2Ny45NDU2MjgsImV4cCI6MTc0NjAzNjU2Ny45Mzk0NTEsInN1YiI6IjE1ODgiLCJzY29wZXMiOltdfQ.TRGG8G86Z-mH3qnaIHey5r2nBfOksMbnRvVhH1k2QZpwiDXXf25Jj-XAEKAQPM6uUR8arKfzP8Q0pt-XFAJJWYDxbYDG4krigaRHiFvPPu97mykCaS4UnIZfx0NEb4Pjq37L4JftrabPIIcYs9PzwQTfJf57CDqPrMPavHkAFJzYeum4HGmQn26P18FJKU_vxSSA5MI4lEXMNnC7OVZ7J-_7KxBis2dsk3P5SD4j09DIcRywU25_AOH6vfSNOGLHCUAJy_ieBFpVapjOxX5SKXYAq7KD54Sshy2GybtLGYOgWF1Rn7KsP75bixw6mK8iJ0k_7Zyt-RAZX3WXMHjeoDGBcSrVHmJldvneSrY4WajdDBV_I0fJTapFfXIVOxnY3k_eWfLj_NUyUdPr75k4K39r_PPRaQgVbYy7L6LC5Iwtr7S_96SaCp5UjkU1ZEqpAkLLQvzcGzTve_i-AqZxhQxQKqx4RZsAVk7LdINEUAzJVEv-zEIn7F9eu8ZNxXfFyX-y4b6y7Zf_0dl1PY7WIdAXoLzfAgDiZn5H7s2evlpriDMD1m58v0CTpg8__pwBtMYmDwuOXveYyLT2B-BJ6AvBkGWN_OLNIdXICFEQ3aBIhcV_MpkIsnbrHZD7vdAtkwOY29Ydq1geQrcNqQ-oikkGY0_nZpLLeoJBvt6HYQ8";
+                const teamId = "35232175";
+                const chargerId = "52805940";
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token} `
+                    }
+                };
+
+                const response = await fetch(`https://cloud.volttime.com/api/v2/teams/${teamId}/chargers/${chargerId}`, options);
+                const data = await response.json();
+
+                setNewStationData(data)
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchNewStation();
+
         const interval = setInterval(fetchDataForStations, MINUTE_MS);
 
         return () => clearInterval(interval);
     }, [setStationData]);
 
+    console.log(newStationData)
+
+    const stationIdToName = {
+        "52805940": "Несебър"
+    }
+
+
+    const startChargingButton = async () => {
+
+        try {
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YTkyMzc4MS04MjE1LTQwYjMtOGU3ZS04ZmI2YjNlZTA1MTUiLCJqdGkiOiJmNzFkZWZlZTFiYzdkYjRmMjM4ODMzMzllMTUwNzViODQxZDA5YzJiMmM3ZGRiMjVjMjlkNjg3ZjU3MTZmZWUxZWY4MmMwZWU2ZDQ0ZmM4OCIsImlhdCI6MTcxNDUwMDU2Ny45NDU2MjYsIm5iZiI6MTcxNDUwMDU2Ny45NDU2MjgsImV4cCI6MTc0NjAzNjU2Ny45Mzk0NTEsInN1YiI6IjE1ODgiLCJzY29wZXMiOltdfQ.TRGG8G86Z-mH3qnaIHey5r2nBfOksMbnRvVhH1k2QZpwiDXXf25Jj-XAEKAQPM6uUR8arKfzP8Q0pt-XFAJJWYDxbYDG4krigaRHiFvPPu97mykCaS4UnIZfx0NEb4Pjq37L4JftrabPIIcYs9PzwQTfJf57CDqPrMPavHkAFJzYeum4HGmQn26P18FJKU_vxSSA5MI4lEXMNnC7OVZ7J-_7KxBis2dsk3P5SD4j09DIcRywU25_AOH6vfSNOGLHCUAJy_ieBFpVapjOxX5SKXYAq7KD54Sshy2GybtLGYOgWF1Rn7KsP75bixw6mK8iJ0k_7Zyt-RAZX3WXMHjeoDGBcSrVHmJldvneSrY4WajdDBV_I0fJTapFfXIVOxnY3k_eWfLj_NUyUdPr75k4K39r_PPRaQgVbYy7L6LC5Iwtr7S_96SaCp5UjkU1ZEqpAkLLQvzcGzTve_i-AqZxhQxQKqx4RZsAVk7LdINEUAzJVEv-zEIn7F9eu8ZNxXfFyX-y4b6y7Zf_0dl1PY7WIdAXoLzfAgDiZn5H7s2evlpriDMD1m58v0CTpg8__pwBtMYmDwuOXveYyLT2B-BJ6AvBkGWN_OLNIdXICFEQ3aBIhcV_MpkIsnbrHZD7vdAtkwOY29Ydq1geQrcNqQ-oikkGY0_nZpLLeoJBvt6HYQ8',
+                    'Content-Type': 'application/json'
+                },
+                body: '{"connector_id":1,"id_tag":"Несебър 1"}'
+            };
+
+            const response = await fetch('https://cloud.volttime.com/api/v2/teams/35232175/chargers/52805940/commands/start', options)
+            if (!response.ok) {
+                throw new Error("Failed to start charging");
+            }
+            const data = await response.json();
+            console.log(data);
+
+        } catch (error) {
+            console.error("Error starting charging", error);
+        }
+
+
+    }
+
+    const stopChargingButton = async () => {
+
+        try {
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YTkyMzc4MS04MjE1LTQwYjMtOGU3ZS04ZmI2YjNlZTA1MTUiLCJqdGkiOiJmNzFkZWZlZTFiYzdkYjRmMjM4ODMzMzllMTUwNzViODQxZDA5YzJiMmM3ZGRiMjVjMjlkNjg3ZjU3MTZmZWUxZWY4MmMwZWU2ZDQ0ZmM4OCIsImlhdCI6MTcxNDUwMDU2Ny45NDU2MjYsIm5iZiI6MTcxNDUwMDU2Ny45NDU2MjgsImV4cCI6MTc0NjAzNjU2Ny45Mzk0NTEsInN1YiI6IjE1ODgiLCJzY29wZXMiOltdfQ.TRGG8G86Z-mH3qnaIHey5r2nBfOksMbnRvVhH1k2QZpwiDXXf25Jj-XAEKAQPM6uUR8arKfzP8Q0pt-XFAJJWYDxbYDG4krigaRHiFvPPu97mykCaS4UnIZfx0NEb4Pjq37L4JftrabPIIcYs9PzwQTfJf57CDqPrMPavHkAFJzYeum4HGmQn26P18FJKU_vxSSA5MI4lEXMNnC7OVZ7J-_7KxBis2dsk3P5SD4j09DIcRywU25_AOH6vfSNOGLHCUAJy_ieBFpVapjOxX5SKXYAq7KD54Sshy2GybtLGYOgWF1Rn7KsP75bixw6mK8iJ0k_7Zyt-RAZX3WXMHjeoDGBcSrVHmJldvneSrY4WajdDBV_I0fJTapFfXIVOxnY3k_eWfLj_NUyUdPr75k4K39r_PPRaQgVbYy7L6LC5Iwtr7S_96SaCp5UjkU1ZEqpAkLLQvzcGzTve_i-AqZxhQxQKqx4RZsAVk7LdINEUAzJVEv-zEIn7F9eu8ZNxXfFyX-y4b6y7Zf_0dl1PY7WIdAXoLzfAgDiZn5H7s2evlpriDMD1m58v0CTpg8__pwBtMYmDwuOXveYyLT2B-BJ6AvBkGWN_OLNIdXICFEQ3aBIhcV_MpkIsnbrHZD7vdAtkwOY29Ydq1geQrcNqQ-oikkGY0_nZpLLeoJBvt6HYQ8',
+                    'Content-Type': 'application/json'
+                },
+                body: '{"connector_id":1,"id_tag":"Несебър 1"}'
+            };
+
+            const response = await fetch('https://cloud.volttime.com/api/v2/teams/35232175/chargers/52805940/commands/start', options)
+            if (!response.ok) {
+                throw new Error("Failed to start charging");
+            }
+            const data = await response.json();
+            console.log(data);
+
+        } catch (error) {
+            console.error("Error starting charging", error);
+        }
+
+
+    }
+
+    const stationNames = {
+        1710: "Несебър",
+    }
+
+    const chargerName = {
+        52805940: "Несебър"
+    }
+
+
     const filteredStations = inputs.search
-        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
-        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2].filter(station => station);
+        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
+        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station);
 
     return (
         <div className="w-full bg-white py-20 px-4">
@@ -111,7 +209,7 @@ const Stations = () => {
             ) : (
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar1, stationNesebar2] : filteredStations).map(station => (
+                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar] : filteredStations).map(station => (
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
                             <div className="w-96 h-60 relative">
                                 <div className="w-80 h-60 relative">
@@ -126,38 +224,43 @@ const Stations = () => {
                                     </div>
                                     <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
                                 </div>
-
-
-                                {/* <div className="flex flex-col mr-3">
-                                    <h2 className="text-l font-bold font-body text-gray-800">{station?.Name}</h2>
-                                    <p className="text-l font-bold font-body text-green-500">{station?.State}</p>
-                                </div>
-                                <div className="flex flex-col ml-5">
-                                    <p className="text-sm text-gray-600 font-body mb-2">{t('stations.charge')} {station?.EVEnergyCharged}kwH</p>
-                                    <p className="text-sm text-gray-600 font-body mb-2">{t('stations.totalEnergy')} {station?.EVTotalEnergyCharged}kwH</p>
-                                    <p className="text-sm text-gray-600 font-body">{t('stations.power')}</p>
-                                </div>
-                                <div className="flex justify-end">
-                                    <img className=" w-20 h-auto" src={chargingStationSVG} alt="stationIcon" />
-                                </div> */}
                             </div>
-                            {/* <div className="w-80 h-60 relative mt-10">
-                                <div className="w-96 h-60 left-0 top-0 absolute rounded-bl-2xl rounded-tr-2xl bg-sky-400" />
-                                <h1 className="left-[11px] top-[51px] absolute text-center text-white text-3xl font-bold font-heading capitalize">{station?.Name}</h1>
-                                <h2 className="left-[14px] top-[172px] absolute text-center text-white text-l font-medium font-body">Charge Power: {station?.EVEnergyCharged} kwH</h2>
-                                <h2 className="left-[14px] top-[207px] absolute text-center text-white text-l font-medium font-body">Total Charged: {station?.EVTotalEnergyCharged} kwH</h2>
-                                <h2 className="left-[14px] top-[137px] absolute text-center text-white text-l font-medium font-body">Power: 22 kw</h2>
-                                <div className="w-56 h-9 left-0 top-0 absolute">
-                                    <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
-                                    <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{station?.State}</h1>
-                                </div>
-                                <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
-                            </div> */}
-
                         </Link>
                     ))}
+                    <div className="w-96 h-80 relative">
+                        <div className="w-80 h-80 relative">
+                            <div className="w-96 h-80 left-0 top-0 absolute rounded-bl-2xl rounded-tr-2xl bg-sky-400" />
+                            <h1 className="left-[11px] top-[51px] absolute text-center text-white text-3xl font-bold font-heading capitalize">{chargerName[newStationData?.data.id]}</h1>
+                            <h2 className="left-[14px] top-[137px] absolute text-center text-white text-l font-medium font-body">Power: 22 kw</h2>
+                            <h2 className="left-[14px] top-[172px] absolute text-center text-white text-l font-medium font-body">Connection Status: {newStationData?.data.connection_status}</h2>
+                            <ul className="left-[14px] top-[202px] absolute text-center text-white text-l font-medium font-body">
+                                {newStationData?.data.connectors ? (
+                                    newStationData?.data.connectors.map((connector) => (
+                                        <li key={connector.id}>
+                                            Connector: {connector.connector_id}:
+                                            <ul>
+                                                <li>Status: {connector.status}</li>
+                                            </ul>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li>No connectors available</li>
+                                )}
+                            </ul>
+                            <button onClick={startChargingButton} className="left-[220px] top-[222px] absolute text-center text-white text-l font-bold">Start</button>
+                            <button className="left-[220px] top-[262px] absolute text-center text-white text-l font-bold">Stop</button>
+
+                            <div className="w-56 h-9 left-0 top-0 absolute">
+                                <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
+                                <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{newStationData?.data.status}</h1>
+                            </div>
+                            <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
+
+                        </div>
+                    </div>
                 </div>
             )}
+
 
         </div>
     );
