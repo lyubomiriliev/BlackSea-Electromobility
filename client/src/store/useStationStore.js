@@ -43,12 +43,19 @@ export const useStationStore = create((set) => ({
     EVEnergyCharged: "0",
     EVTotalEnergyCharged: "3341",
   },
-  stationDolniChiflik: {
+  stationDolniChiflik1: {
     stationCode: 8910,
-    Name: "Долни Чифлик",
+    Name: "Долни Чифлик 1",
     State: "Ready to Charge",
     EVEnergyCharged: "0",
     EVTotalEnergyCharged: "20410",
+  },
+  stationDolniChiflik2: {
+    stationCode: 8911,
+    Name: "Долни Чифлик 2",
+    State: "Ready to Charge",
+    EVEnergyCharged: "0",
+    EVTotalEnergyCharged: "2776",
   },
   stationKavarna1: {
     stationCode: 7331,

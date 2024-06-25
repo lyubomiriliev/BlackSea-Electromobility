@@ -11,7 +11,7 @@ const Stations = () => {
 
     const { t } = useTranslation();
 
-    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar } = useStationStore();
+    const { stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, setStationData, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2, stationNesebar } = useStationStore();
     const [inputs, setInputs] = useState({ search: "" })
     const [isSearchFocused, setSearchFocused] = useState(false);
 
@@ -165,8 +165,8 @@ const Stations = () => {
 
 
     const filteredStations = inputs.search
-        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
-        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station);
+        ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station && new RegExp(inputs.search, 'i').test(station.Name))
+        : [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2, stationNesebar].filter(station => station);
 
     return (
         <div className="w-full bg-white py-20 px-4">
@@ -209,7 +209,7 @@ const Stations = () => {
             ) : (
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik, stationKavarna1, stationKavarna2, stationNesebar] : filteredStations).map(station => (
+                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2, stationNesebar] : filteredStations).map(station => (
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
                             <div className="w-96 h-60 relative">
                                 <div className="w-80 h-60 relative">
