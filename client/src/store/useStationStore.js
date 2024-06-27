@@ -34,7 +34,7 @@ export const useStationStore = create((set) => ({
     Name: "Дългопол 1",
     State: "Ready to Charge",
     EVEnergyCharged: "2025",
-    EVTotalEnergyCharged: "40244",
+    EVTotalEnergyCharged: "3064",
   },
   stationDalgopol2: {
     stationCode: 6631,
@@ -70,11 +70,6 @@ export const useStationStore = create((set) => ({
     State: "Ready to Charge",
     EVEnergyCharged: "1096",
     EVTotalEnergyCharged: "33300",
-  },
-  stationNesebar: {
-    stationCode: 7441,
-    Name: "Несебър",
-    State: "",
   },
   setStationData: (data) => {
     set((state) => ({

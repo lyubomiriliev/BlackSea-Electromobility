@@ -52,6 +52,13 @@ const Stations = () => {
                     "Бяла 2": { ...stationData["Бяла 2"], Name: "Бяла 2" },
                     "Приморско 1": { ...stationData["Приморско 1"], Name: "Приморско 1" },
                     "Приморско 2": { ...stationData["Приморско 2"], Name: "Приморско 2" },
+                    "Дългопол 1": { ...stationDalgopol1, Name: "Дългопол 1" },
+                    "Дългопол 2": { ...stationDalgopol2, Name: "Дългопол 2" },
+                    "Долни Чифлик 1": { ...stationDolniChiflik1, Name: "Долни Чифлик 1" },
+                    "Долни Чифлик 2": { ...stationDolniChiflik2, Name: "Долни Чифлик 2" },
+                    "Каварна 1": { ...stationKavarna1, Name: "Каварна 1" },
+                    "Каварна 2": { ...stationKavarna2, Name: "Каварна 2" },
+                    "Несебър": { ...stationNesebar, Name: "Несебър" },
                 };
                 localStorage.setItem('stationData', JSON.stringify(updatedStationData));
                 setStationData(updatedStationData);
@@ -155,12 +162,20 @@ const Stations = () => {
 
     }
 
-    const stationNames = {
-        1710: "Несебър",
-    }
+    // const stationNames = {
+    //     1710: "Несебър",
+    // }
 
     const chargerName = {
         52805940: "Несебър"
+    }
+
+    const chargerStatus = {
+        Available: "READY TO CHARGE"
+    }
+
+    const connectorStatus = {
+        Available: "Свободен",
     }
 
 
@@ -209,7 +224,7 @@ const Stations = () => {
             ) : (
                 <
                     div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2, stationNesebar] : filteredStations).map(station => (
+                    {(inputs.search === "" ? [stationByala1, stationByala2, stationPrimorsko1, stationPrimorsko2, stationDalgopol1, stationDalgopol2, stationDolniChiflik1, stationDolniChiflik2, stationKavarna1, stationKavarna2] : filteredStations).map(station => (
                         <Link key={station?.stationCode} to={`/station-details/${station?.Name}`} className=" hover:opacity-70">
                             <div className="w-96 h-60 relative">
                                 <div className="w-80 h-60 relative">
@@ -227,19 +242,18 @@ const Stations = () => {
                             </div>
                         </Link>
                     ))}
-                    <div className="w-96 h-80 relative">
-                        <div className="w-80 h-80 relative">
-                            <div className="w-96 h-80 left-0 top-0 absolute rounded-bl-2xl rounded-tr-2xl bg-sky-400" />
+                    <Link to={`/station-details/${chargerName[newStationData?.data.id]}`} className="hover:opacity-70">
+                        <div className="w-96 h-80 mb-20 flex flex-col relative rounded-bl-2xl rounded-tr-2xl bg-sky-400">
                             <h1 className="left-[11px] top-[51px] absolute text-center text-white text-3xl font-bold font-heading capitalize">{chargerName[newStationData?.data.id]}</h1>
                             <h2 className="left-[14px] top-[137px] absolute text-center text-white text-l font-medium font-body">Power: 22 kw</h2>
                             <h2 className="left-[14px] top-[172px] absolute text-center text-white text-l font-medium font-body">Connection Status: {newStationData?.data.connection_status}</h2>
                             <ul className="left-[14px] top-[202px] absolute text-center text-white text-l font-medium font-body">
                                 {newStationData?.data.connectors ? (
                                     newStationData?.data.connectors.map((connector) => (
-                                        <li key={connector.id}>
+                                        <li className="flex flex-col items-start" key={connector.id}>
                                             Connector: {connector.connector_id}:
                                             <ul>
-                                                <li>Status: {connector.status}</li>
+                                                <li className="mb-4">Status: {connectorStatus[connector.status]}</li>
                                             </ul>
                                         </li>
                                     ))
@@ -247,17 +261,13 @@ const Stations = () => {
                                     <li>No connectors available</li>
                                 )}
                             </ul>
-                            <button onClick={startChargingButton} className="left-[220px] top-[222px] absolute text-center text-white text-l font-bold">Start</button>
-                            <button className="left-[220px] top-[262px] absolute text-center text-white text-l font-bold">Stop</button>
-
                             <div className="w-56 h-9 left-0 top-0 absolute">
                                 <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
-                                <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{newStationData?.data.status}</h1>
+                                <h1 className="left-[12px] top-[3px] absolute text-white text-xl font-bold font-heading uppercase">{chargerStatus[newStationData?.data.status]}</h1>
                             </div>
                             <img className="w-44 h-44 left-[212px] top-[35px] absolute" src={chargingStationSVG} />
-
                         </div>
-                    </div>
+                    </Link>
                 </div>
             )}
 
