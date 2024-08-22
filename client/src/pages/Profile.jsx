@@ -20,20 +20,20 @@ const Profile = () => {
     const [isEmailFocused, setEmailFocused] = useState(false);
     const [isNameFocused, setNameFocused] = useState(false);
     const [isSurnameFocused, setSurnameFocused] = useState(false);
-    const [isrepeatNewPasswordFocused, setRepeatNewPasswordFocused] = useState(false);
+    const [isCurrentPasswordFocused, setCurrentPasswordFocused] = useState(false);
     const [isNewPasswordFocused, setNewPasswordFocused] = useState(false);
     const [isPhoneFocused, setPhoneFocused] = useState(false);
 
-    const [showrepeatNewPassword, setShowrepeatNewPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 
     const [errors, setErrors] = useState({
         name: "",
         surname: "",
         email: "",
         phone: "",
+        currentPassword: "",
         newPassword: "",
-        repeatNewPassword: "",
     });
 
     const handleInputBlur = (e) => {
@@ -58,20 +58,20 @@ const Profile = () => {
                     errorMessage = t("registerError.invalidEmail")
                 }
                 break;
-            case 'newPassword':
+            case 'currentPassword':
                 if (!value.trim()) {
                     errorMessage = t("registerError.passwordRequired")
-                    setNewPasswordFocused(false);
-                } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
+                    setCurrentPasswordFocused(false);
+                } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
                 setShowNewPassword(true);
                 break;
-            case 'repeatNewPassword':
+            case 'newPassword':
                 if (!value.trim()) {
                     errorMessage = t("registerError.repeatPasswordRequired")
-                    setRepeatNewPasswordFocused(false);
-                } else if (inputs.newPassword !== inputs.repeatNewPassword) {
+                    setNewPasswordFocused(false);
+                } else if (inputs.currentPassword === inputs.newPassword) {
                     errorMessage = t("registerError.passwordMismatch")
                 }
                 break;
@@ -89,10 +89,6 @@ const Profile = () => {
             ...prevErrors,
             [name]: errorMessage
         }));
-    }
-
-    const togglerepeatNewPasswordVisibility = () => {
-        setShowrepeatNewPassword(!showrepeatNewPassword)
     }
 
     const toggleNewPasswordVisibility = () => {
@@ -119,28 +115,48 @@ const Profile = () => {
     const [inputs, setInputs] = useState({
         name: authUser?.name || "",
         surname: authUser?.surname || "",
+        currentPassword: "",
         newPassword: "",
-        repeatNewPassword: "",
         phone: authUser?.phone || "",
         email: authUser?.email || "",
     });
 
+    const toggleCurrentPasswordVisibility = () => {
+        setShowCurrentPassword(!showCurrentPassword);
+    }
+
     const handleEditProfile = async () => {
 
-        const { repeatNewPassword, newPassword } = inputs;
+        const { currentPassword, newPassword } = inputs;
 
-        const credential = EmailAuthProvider.credential(authUser.email, repeatNewPassword)
+        if (!currentPassword) {
+            toast.error("Please provide your current password.");
+            return;
+        }
 
         try {
-            if (newPassword && repeatNewPassword !== newPassword && repeatNewPassword !== "") {
+
+            const credential = EmailAuthProvider.credential(authUser.email, currentPassword)
+            await reauthenticateWithCredential(auth.currentUser, credential);
+
+            if (currentPassword !== newPassword && newPassword !== "") {
                 await updatePassword(auth.currentUser, newPassword);
                 toast.success("Password changed successfully")
-            } else if (repeatNewPassword !== newPassword && repeatNewPassword !== "") {
+
+                const updatedAuthUser = {
+                    ...authUser,
+                    password: newPassword,
+                }
+                setAuthUser(updatedAuthUser);
+                localStorage.setItem("user-info", JSON.stringify(updatedAuthUser));
+
+            } else if (currentPassword === newPassword) {
                 toast.error("New password cannot be the same as the old one.")
                 return;
             }
 
             await editProfile({
+                ...authUser,
                 name: inputs.name,
                 surname: inputs.surname,
                 email: inputs.email,
@@ -155,11 +171,15 @@ const Profile = () => {
                 phone: inputs.phone
             };
             setAuthUser(updatedAuthUser);
-
             localStorage.setItem("user-info", JSON.stringify(updatedAuthUser));
             toast.success("Changes saved successfully")
         } catch (error) {
-            toast.error("Error updating profile. Please try again")
+            console.error("Error updating profile", error);
+            if (error.code === 'auth/invalid-credential') {
+                toast.error("Invalid current password. Please check your password.");
+            } else {
+                toast.error("Error updating profile. Please try again.");
+            }
         }
 
 
@@ -269,44 +289,44 @@ const Profile = () => {
                 <div className="relative mb-5">
                     <input
                         className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
-                        type={showNewPassword ? "text" : "password"}
-                        name="newPassword"
+                        type={showCurrentPassword ? "text" : "password"}
+                        name="currentPassword"
                         onChange={handleInputChange}
-                        onFocus={() => setNewPasswordFocused(true)}
+                        onFocus={() => setCurrentPasswordFocused(true)}
                         onBlur={handleInputBlur}
                     />
                     <label
-                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isCurrentPasswordFocused || inputs.currentPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
-                        htmlFor="name"
+                        htmlFor="currentPassword"
                     >
-                        {t('profile.newPassword')}
+                        {t('profile.currentPassword')}
                     </label>
-                    {errors.newPassword && <p className="text-red-500 font-body text-xs">{errors.newPassword}</p>}
-                    <button type="button" onClick={toggleNewPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                    {errors.currentPassword && <p className="text-red-500 font-body text-xs">{errors.currentPassword}</p>}
+                    <button type="button" onClick={toggleCurrentPasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                         {showNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                 </div>
                 <div className="relative mb-5">
                     <input required
                         className="input-field border font-body border-gray-300 rounded-md mb-5 px-4 py-2 w-full focus:outline-none focus:border-primary"
-                        type={showrepeatNewPassword ? "text" : "password"}
-                        name="repeatNewPassword"
+                        type={showNewPassword ? "text" : "password"}
+                        name="newPassword"
                         onChange={handleInputChange}
-                        onFocus={() => setRepeatNewPasswordFocused(true)}
+                        onFocus={() => setNewPasswordFocused(true)}
                         onBlur={handleInputBlur}
                     />
-                    <button type="button" onClick={togglerepeatNewPasswordVisibility} className="absolute  inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
-                        {showrepeatNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    <button type="button" onClick={toggleNewPasswordVisibility} className="absolute  inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                        {showNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     </button>
                     <label
-                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isrepeatNewPasswordFocused || inputs.repeatNewPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
+                        className={`absolute left-4 font-body -mt-3 transition-all duration-300 ${isNewPasswordFocused || inputs.newPassword ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-4 -mt-3 translate-y-5 text-gray-400'
                             }`}
-                        htmlFor="name"
+                        htmlFor="newPassword"
                     >
-                        {t('profile.repeatNewPassword')}
+                        {t('profile.newPassword')}
                     </label>
-                    {errors.repeatNewPassword && <p className="text-red-500 font-body text-xs">{errors.repeatNewPassword}</p>}
+                    {errors.newPassword && <p className="text-red-500 font-body text-xs">{errors.newPassword}</p>}
                 </div>
                 <button onClick={handleEditProfile} className="bg-secondary text-white py-3 px-8 rounded-md hover:bg-primary duration-300 font-body mt-6 w-1/3">{t('profile.submit')}</button>
                 <div className="flex items-center mt-6">

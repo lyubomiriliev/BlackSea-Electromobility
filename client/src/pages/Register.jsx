@@ -9,7 +9,6 @@ import i18n from "../i18n";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import Home from "./Home.jsx";
 
 
 const Register = () => {
@@ -80,7 +79,7 @@ const Register = () => {
                 if (!value.trim()) {
                     errorMessage = t("registerError.passwordRequired")
                     setPasswordFocused(false);
-                } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
+                } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
                 setShowPassword(true);
@@ -121,6 +120,9 @@ const Register = () => {
         const newErrors = {};
 
         const nameRegex = /^[a-zA-Zа-яА-Я\s]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/;
+        const phoneRegex = /^[0-9+]+$/;
+
 
         try {
             if (!inputs.name.trim()) {
@@ -146,7 +148,6 @@ const Register = () => {
                 formIsValid = false;
             }
 
-            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
 
             if (!inputs.password.trim() || !passwordRegex.test(inputs.password.trim())) {
                 newErrors.password = t("registerError.passwordRequired");
@@ -158,7 +159,6 @@ const Register = () => {
                 formIsValid = false;
             }
 
-            const phoneRegex = /^[0-9+]+$/;
             if (!inputs.phone.trim() || !phoneRegex.test(inputs.phone.trim())) {
                 newErrors.phone = t("registerError.phoneRequired");
                 formIsValid = false;

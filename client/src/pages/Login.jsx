@@ -9,7 +9,6 @@ import i18n from "../i18n";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
-import { ToastContainer } from "react-toastify"
 import useAuthStore from "../store/authStore";
 
 const Login = () => {
@@ -80,7 +79,8 @@ const Login = () => {
         return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
     };
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/;
+
 
 
     const handleInputBlur = (e) => {
@@ -100,7 +100,7 @@ const Login = () => {
                 if (!value.trim()) {
                     errorMessage = t("loginError.passwordRequired")
                     setIsPasswordFocused(false);
-                } else if (!/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/.test(value)) {
+                } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/.test(value)) {
                     errorMessage = t("registerError.passwordInvalid");
                 }
                 break;
