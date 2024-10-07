@@ -17,9 +17,6 @@ import AuthGuard from "./components/guards/AuthGuard";
 import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useStationStore } from "./store/useStationStore";
-import { useEffect } from "react";
-import { fetchDataForAllStations } from "./utils/api";
 import StationsDetails from "./components/StationsDetails";
 
 const Layout = () => {
@@ -89,6 +86,7 @@ function App() {
 
   return (
     <div>
+      <ToastContainer />
       <RouterProvider router={router} />
     </div>
   )
