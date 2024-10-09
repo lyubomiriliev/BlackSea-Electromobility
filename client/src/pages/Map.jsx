@@ -3,6 +3,22 @@ import { stationsMarkers } from "../constants/constants";
 
 const Map = () => {
   useEffect(() => {
+    const loadGoogleMapsScript = () => {
+      if (!document.querySelector(`script[src*="https://maps.googleapis.com/maps/api/js?key="]`)) {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_API_KEY}&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+    
+        script.onload = () => {
+          initializeMap(); // Initialize the map once the Google Maps script has loaded
+        };
+      } else {
+        initializeMap(); // If the script is already loaded, just initialize the map
+      }
+    };
+
     const initializeMap = () => {
       const mapOptions = {
         center: { lat: 42.85472, lng: 27.90156 },
@@ -16,12 +32,9 @@ const Map = () => {
         fullscreenControlOptions: {
           position: window.google.maps.ControlPosition.RIGHT_CENTER,
         },
-
       };
 
-      // Create the map
       const map = new window.google.maps.Map(document.getElementById("map"), mapOptions);
-
 
       const exitStreetViewBtn = document.createElement("button");
       exitStreetViewBtn.innerText = "Exit Street View";
@@ -39,12 +52,11 @@ const Map = () => {
         cursor: pointer;
         display: none; /* Hidden by default */
       `;
-      
+
       document.body.appendChild(exitStreetViewBtn);
 
       const streetView = map.getStreetView();
 
-      // Show Exit button when Street View is active
       streetView.addListener("visible_changed", () => {
         if (streetView.getVisible()) {
           exitStreetViewBtn.style.display = "block";
@@ -59,7 +71,6 @@ const Map = () => {
 
       let activeInfoWindow = null;
 
-      // Add markers and info windows for each station
       stationsMarkers.forEach((station) => {
         const marker = new window.google.maps.Marker({
           position: { lat: station.lat, lng: station.lng },
@@ -67,9 +78,8 @@ const Map = () => {
           title: station.name,
         });
 
-        // Create an InfoWindow for the marker
         const infoWindow = new window.google.maps.InfoWindow({
-            content: `
+          content: `
             <div style="font-family: Arial, sans-serif; max-width: 250px;">
               <h2 style="font-size: 18px; font-weight: bold; color: #333; margin-bottom: 8px;">${station.name}</h2>
               <p style="font-size: 14px; margin: 0; color: #666;">${station.address}</p>
@@ -97,7 +107,6 @@ const Map = () => {
           `,
         });
 
-
         marker.addListener("click", () => {
           if (activeInfoWindow) {
             activeInfoWindow.close();
@@ -107,7 +116,6 @@ const Map = () => {
             infoWindow.open(map, marker);
             activeInfoWindow = infoWindow;
 
-            // Pan the map to ensure the marker and InfoWindow are fully visible
             map.panTo(marker.getPosition());
 
             setTimeout(() => {
@@ -123,24 +131,10 @@ const Map = () => {
       });
     };
 
-    // Ensure the Google Maps API is loaded and then initialize the map
-    if (window.google && window.google.maps) {
-      initializeMap();
-    } else {
-      const interval = setInterval(() => {
-        if (window.google && window.google.maps) {
-          clearInterval(interval);
-          initializeMap();
-        }
-      }, 100);
-    }
+    loadGoogleMapsScript();
   }, []);
 
-  return (
-    <div>
-      <div id="map" style={{ width: "100%", height: "100vh" }}></div>
-    </div>
-  );
+  return <div id="map" style={{ width: "100%", height: "100vh" }}></div>;
 };
 
 export default Map;

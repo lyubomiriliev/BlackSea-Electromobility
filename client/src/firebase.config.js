@@ -6,7 +6,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCLtDPnQdXfMwRAaU6WktRzGAufwZni47Y",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "blacksea-electromobility.firebaseapp.com",
   projectId: "blacksea-electromobility",
   storageBucket: "blacksea-electromobility.appspot.com",
