@@ -163,11 +163,17 @@ const Login = () => {
 
     return (
         <div>
-            <div className="min-h-screen flex justify-center bg-gray-50 py-1 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
+            <div className="min-h-screen flex justify-center items-start px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full">
                     <div>
+                        <div className="flex justify-center py-10 space-x-4">
+                                <button onClick={() => i18n.changeLanguage('en')} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary duration-300">EN</button>
+                                <button onClick={() => i18n.changeLanguage('bg')} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary duration-300">BG</button>
+                            </div>
                         <img className="h-40 w-auto mx-auto" src={BlackSeaLogo} alt="mainLogo" />
-                        <h1 className="mt-6 text-center text-4xl font-bold text-gray-900">{t('login.welcome')}</h1>
+                        <div className="flex items-center gap-10 w-full justify-center">
+                            
+                        </div>
                         <div className="mt-6">
                             <form className="mt-8 flex flex-col" onSubmit={handleSubmit} noValidate>
                                 <div className="relative mb-5">
@@ -205,15 +211,16 @@ const Login = () => {
                                         >
                                             {t('login.password')}
                                         </label>
-                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
+                                        <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 bottom-6 flex items-center mr-3 -mt-5 text-gray-400 cursor-pointer">
                                             {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                         </button>
-                                    </div>
-                                    {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
-                                    <div className="flex items-center">
+                                        <div className="flex justify-center items-center">
                                         <label htmlFor="rememberUser">{t("login.signedIn")}</label>
                                         <input className="ml-2" type="checkbox" id="rememberUser" checked={rememberUser} onChange={(e) => setRememberUser(e.target.checked)} />
                                     </div>
+                                    </div>
+                                    {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+
                                     <button type="submit" className="bg-primary text-white text-base mt-5 py-3 px-20 tracking-wide rounded-md flex mx-auto hover:bg-secondary duration-300">{t('login.login')}</button>
                                 </div>
                             </form>
@@ -223,10 +230,6 @@ const Login = () => {
                             <Link to="/register" className="font-medium ">
                                 <button className="flex mx-auto py-2 text-secondary font-bold">{t('login.noProfile')}</button>
                             </Link>
-                            <div className="flex justify-center mt-10 space-x-4">
-                                <button onClick={() => i18n.changeLanguage('en')} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary duration-300">EN</button>
-                                <button onClick={() => i18n.changeLanguage('bg')} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary duration-300">BG</button>
-                            </div>
                         </div>
                     </div>
                 </div>

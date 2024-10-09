@@ -42,7 +42,8 @@ import Cost from "../assets/homeImages/cost.png";
 import Map from "../assets/homeImages/map.png";
 import Type from "../assets/homeImages/type.png";
 
-import Type2 from "../assets/white/type2png.png";
+import Type2 from "../assets/type2png.png";
+import stationImage from "../assets/stationImage.svg"
 
 export {
   logoBlackSea,
@@ -85,4 +86,5 @@ export {
   Map,
   Type,
   Type2,
+  stationImage
 };

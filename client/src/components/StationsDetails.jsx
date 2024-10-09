@@ -1,9 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { Type2, chargingStationSVG } from "../assets";
+import { stationImage, Type2 } from "../assets";
 import { useStationStore } from "../store/useStationStore";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+
+import { FaChargingStation } from "react-icons/fa6";
+import { FaDirections } from "react-icons/fa";
+import { IoChevronBack } from "react-icons/io5";
+import { stationsMarkers } from "../constants/constants";
 
 
 const StationsDetails = () => {
@@ -12,6 +17,7 @@ const StationsDetails = () => {
     const { setStationData } = useStationStore();
     const { name } = useParams()
     const [newStationData, setNewStationData] = useState(null);
+    const [selectedStation, setSelectedStation] = useState(null);
 
     useEffect(() => {
         const storedStationData = localStorage.getItem('stationData');
@@ -19,6 +25,11 @@ const StationsDetails = () => {
             const parsedStationData = JSON.parse(storedStationData);
             if (parsedStationData[name]) {
                 setNewStationData(parsedStationData[name]);
+                const stationNameWithoutNumber = parsedStationData[name].Name.replace(/\d+/g, '').trim();
+                const foundStation = stationsMarkers.find(station => station.name.includes(stationNameWithoutNumber))
+            if (foundStation) {
+                setSelectedStation(foundStation);
+            }
             }
         } else {
             const foundStation = Object.values(stations).find(station => station.Name === decodeURIComponent(name));
@@ -30,8 +41,13 @@ const StationsDetails = () => {
 
     }, [name]);
 
-    const startChargingButton = async () => {
+    const handleOpenDirections = () => {
+        if(selectedStation) {
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedStation.lat},${selectedStation.lng}`, "_blank")
+        }
+    }
 
+    const startChargingButton = async () => {
         try {
 
             const options = {
@@ -54,46 +70,66 @@ const StationsDetails = () => {
             console.error("Error starting charging", error);
         }
 
-
     }
 
     return (
-        <div className="w-full flex-col bg-white py-20 px-4">
-            <div className="flex justify-center mb-4 relative mt-5">
-                <div className="w-96 h-96 relative bg-sky-400">
-                    <img className="w-40 h-52 top-6 right-2 absolute" src={chargingStationSVG} />
-                    <h1 className="w-60 left-[0px] top-[50px] absolute text-center text-white text-4xl font-bold font-body capitalize">{newStationData?.Name}</h1>
-                    <div className="w-44 h-60 left-[200px] top-[140px] absolute">
-                        <img className="w-24 h-32 left-14 top-16 absolute" src={Type2} />
-                        <h1 className=" right-[46px] bottom-16 absolute text-center text-white text-l font-bold font-body capitalize">{t('stationDetails.type')}</h1>
-                        <h1 className="right-[2px] bottom-[2px] absolute text-center text-white text-sm font-bold font-body capitalize">#3736</h1>
-                    </div>
-                    <div className="w-60 h-64 left-[15px] bottom-[20px] absolute">
-                        <h3 className="left-0 bottom-40 absolute text-white text-l font-light font-body">{t('stationDetails.power')}</h3>
-                        <h3 className="left-0 bottom-32 absolute text-white text-l font-light font-body">{t('stationDetails.totalEnergy')} {newStationData?.EVTotalEnergyCharged} kwH</h3>
-                        <h3 className="left-0 bottom-24 absolute text-white text-l font-light font-body">{t('stationDetails.charged')} {newStationData?.EVEnergyCharged} kwH</h3>
-                        <h3 className="left-0 bottom-16 absolute text-white text-l font-light font-body">{t('stationDetails.chargePower')} {newStationData?.EVChargePower} kw</h3>
-                        <h3 className="left-0 bottom-8 absolute text-white text-l font-light font-body">{t('stationDetails.plugState')} {newStationData?.EVPlugState}</h3>
-                        <h3 className="left-0 bottom-0 absolute text-white text-l font-light font-body">{t('stationDetails.location')} </h3>
-                    </div>
-                    <div className="w-56 h-9 left-0 top-0 absolute bg-green-400 rounded-br-2xl" />
-                    <div className="left-[14px] top-[4px] absolute text-white text-xl font-bold font-heading uppercase">{newStationData?.State}</div>
-                </div>
-            </div>
-            <div className="flex justify-center">
-                <div className="flex">
-                    <button onClick={startChargingButton} className="mx-2 py-2 px-4 rounded bg-primary hover:bg-secondary text-white">Start charging</button>
-                    <button className="mx-2 py-2 px-4 rounded bg-primary hover:bg-secondary text-white">Stop charging</button>
-                </div>
+        <div className="w-full min-h-screen flex flex-col items-center bg-gray-100 py-20 md:py-24 px-4">
+          {/* Station name and type */}
+            <div className="flex w-full justify-between items-center py-5">
+                <div>
                 <Link to="/stations">
-                    <button className="mx-2 py-2 px-4 rounded bg-primary hover:bg-secondary text-white">Back to stations</button>
+                    <IoChevronBack className="text-3xl" />
                 </Link>
+                </div>
+                <h1 className="font-bold text-3xl mt-2 md:text-4xl uppercase">{newStationData?.Name}</h1>
+                <div className="flex flex-col items-center gap-2">
+
+                </div>
             </div>
+
+          {/* Hero section with info and image */}
+          <div className="w-full flex flex-col md:flex-row items-center justify-center mb-10">
+            {/* Left side: station info */}
+            <div className="w-full bg-gray md:w-96 p-6 rounded-lg text-center md:text-left">
+              <h3 className="font-semibold text-2xl mb-4">{t('stationDetails.details')}</h3>
+              <ul className="space-y-2 md:text-xl">
+                <li>{t('stationDetails.power')}</li>
+                <li>{t('stationDetails.totalEnergy')} {newStationData?.EVTotalEnergyCharged} kWh</li>
+                <li>{t('stationDetails.charged')} {newStationData?.EVEnergyCharged} kWh</li>
+                <li>{t('stationDetails.chargePower')} {newStationData?.EVChargePower} kW</li>
+                <li>{t('stationDetails.plugState')} {newStationData?.EVPlugState}</li>
+              </ul>
+            </div>
+    
+            {/* Right side: station image */}
+            <div className="w-full md:w-1/2">
+              <img src={stationImage} alt="Charging Station" className="w-full h-auto" />
+            </div>
+            
+          </div>
+    
+          {/* Buttons section */}
+          <div className="w-[80%] md:w-[20%] flex flex-col justify-center items-center gap-4 mb-5">
+            <div className="w-full flex justify-center items-center gap-8">
+                <button onClick={startChargingButton} className="py-2 px-8 bg-primary hover:bg-secondary text-white duration-300 rounded-lg shadow flex items-center gap-2 w-full justify-center">
+                {t('stationDetails.startCharging')}
+                <FaChargingStation className="text-white" />
+                </button>
+                <button className="py-2 px-8 bg-primary hover:bg-secondary text-white duration-300 rounded-lg shadow flex items-center gap-2 w-full justify-center">
+                {t('stationDetails.stopCharging')}
+                <FaChargingStation className="text-white" />
+                </button>
+            </div>
+            <div className="w-full flex justify-center items-center mx-auto">
+                <button onClick={handleOpenDirections} className="py-2 px-8 bg-primary hover:bg-secondary text-white duration-300 rounded-lg shadow flex items-center gap-2 w-full justify-center">
+                {t('map.getDirections')}
+                <FaDirections className="text-white" />
+                </button>
+            </div>
+          </div>
         </div>
-    );
-
-
-};
+      );
+    };
 
 
 

@@ -57,7 +57,7 @@
         "passwordRequired": "This field cannot be empty.",
         "passwordInvalid": "Password must be at least 6 characters long and include at least one capital letter, one small letter and one number.",
         "repeatPasswordRequired": "This field cannot be empty.",
-        "passwordMismatch": "The passwords don't match.",
+        "passwordMismatch": "Old and new passwords cannot be the same.",
         "phoneRequired": "This field cannot be empty.",
         "phoneInvalid": "Phone numbers can only contain numbers"
     },
@@ -90,10 +90,15 @@
         "charged": "Energy charged:",
         "chargePower": "Charge Power:",
         "plugState": "Plug state:",
-        "location": "Location:"
+        "location": "Location:",
+        "backToStations": "Back",
+        "stopCharging": "Stop",
+        "startCharging": "Start",
+        "details": "Station Info"
     },
     "map": {
-        "title": "CHARGING STATIONS MAP"
+        "title": "CHARGING STATIONS MAP",
+        "getDirections": "Get Directions"
     },
     "forgotPassword": {
         "title": "Reset your password",

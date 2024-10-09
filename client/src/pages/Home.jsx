@@ -5,7 +5,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import { MdClose } from "react-icons/md";
 import { useEffect } from "react";
 import { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import HeroSection from "../components/HeroSection";
+import Partners from "../components/Partners";
 
 
 
@@ -75,112 +77,49 @@ const Home = () => {
 
 
     return (
-        <div className="w-full mx-auto my-10 py-20 px-5 flex flex-col items-center justify-center text-center">
-            <h1 className="text-center w-96 mb-2 text-secondary text-4xl font-bold font-heading">{t('home.title')}</h1>
-            <div className="w-full md:w-2/3 relative">
-                <div className="md:absolute md:left-0 md:w-1/2 md:mt-10 md:ml-10 flex flex-col text-left">
-                    <div className="flex items-center mt-10 mb-5">
-                        <h2 className="w-full text-secondary text-2xl font-bold font-heading">{t('home.subheading')}</h2>
-                    </div>
-                    <p className="md:w-3/5 font-body font-light text-xl">{t('home.publicStations')}</p>
-                </div>
-                <div className="w-full flex justify-center md:justify-end">
-                    <img onClick={navigateToStations} className="w-full md:w-2/3 h-auto object-cover mt-5 relative cursor-pointer" src={HeroSectionCar} alt="Car Charging" />
-                </div>
-            </div>
-            <div className="w-full md:w-2/3 flex flex-col md:flex-row gap-10 mt-10">
-                <div className="w-full md:w-1/3 flex-col">
-                    <div className="flex items-start mb-5">
+        <div className="w-full mx-auto my-10 py-20 px-5 md:px-0 flex flex-col items-center justify-center">
+            <HeroSection />
+            {/* SubHero Start */}
+            <div className="w-full md:w-2/3 justify-between  gap-5 md:gap-10 items-center  flex flex-col md:flex-row mt-10">
+                <div className="w-full md:w-1/3 flex flex-col">
+                    <div className="flex flex-col items-start mb-5">
                         <div className="flex items-center">
                             <img src={Map} className="w-16 h-16" alt="" />
-                            <h2 className="text-xl font-medium ml-2 fo font-heading">{t('home.locations')}</h2>
+                            <h2 className="text-2xl md:text-3xl ml-2 font-heading">{t('home.locations')}</h2>
                         </div>
-                    </div>
                     <p className="text-sm text-left font-body font-light">{t('home.muncipalities')}</p>
+                    </div>
                 </div>
+
                 <div className="md:h-24 md:bg-black w-[1px] md:mt-5"></div>
-                <div className="w-full md:w-1/3 flex-col">
-                    <div className="flex items-start mb-5">
+
+                <div className="w-full md:w-1/3 flex-col ">
+                    <div className="flex flex-col items-start mb-5">
                         <div className="flex items-center">
                             <img src={Type} className="w-16 h-16" alt="" />
-                            <h2 className="text-xl font-medium ml-2 font-heading">{t('home.stationType')}</h2>
+                            <h2 className="text-2xl md:text-3xl ml-2 font-heading">{t('home.stationType')}</h2>
                         </div>
-                    </div>
                     <p className="text-sm text-left font-body font-light">{t('home.stationInfo')}</p>
+                    </div>
                 </div>
+
                 <div className="md:h-24 md:bg-black w-[1px] md:mt-5"></div>
+
                 <div className="w-full md:w-1/3 flex-col">
-                    <div className="flex items-start mb-5">
+                    <div className="flex flex-col items-start mb-5">
                         <div className="flex items-center">
                             <img src={Cost} className="w-16 h-16" alt="" />
-                            <h2 className="text-xl font-medium ml-2 font-heading">{t('home.freeCharge')}</h2>
+                            <h2 className="text-2xl md:text-3xl ml-2 font-heading">{t('home.freeCharge')}</h2>
                         </div>
-                    </div>
                     <p className="text-sm text-left font-body font-light">{t('home.freeChargeDesc')}</p>
-                </div>
-            </div>
-            <div className="w-full h-20 mt-10 flex items-center bg-secondary">
-                <h2 className="w-full text-2xl font-bold text-white text-center font-heading">{t('home.partners')}</h2>
-            </div>
-            <h2 className="text-xl font-medium mb-6"></h2>
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
-                <Link to="https://primorsko.bg/">
-                    <img className="w-20" src={primorsko} alt="primorsko" />
-                </Link>
-                <Link to="https://www.byala.org/">
-                    <img className="w-20" src={byalaLogo} alt="byalaLogo" />
-                </Link>
-                <Link to="https://dolnichiflik.bg/wps/portal/municipality-dolni-chiflik/home">
-                    <img className="w-20" src={chiflikLogo} alt="chiflikLogo" />
-                </Link>
-                <Link to="https://www.dalgopol.bg/">
-                    <img className="w-20" src={dulgopolLogo} alt="dulgopolLogo" />
-                </Link>
-            </div>
-            <div className="grid grid-cols-4 md:grid-cols-4 gap-4 mt-5">
-                <Link to="https://www.kavarna.bg/">
-                    <img className="w-20" src={kavarnaLogo} alt="kavarnaLogo" />
-                </Link>
-                <Link to="https://www.nesebar.bg/">
-                    <img className="w-20" src={neseburLogo} alt="neseburLogo" />
-                </Link>
-                <Link to="https://www.ubbsla.org/">
-                    <img className="w-20" src={abchoPNG} alt="abchoLogo" />
-                </Link>
-                <Link to="https://smartinnovationnorway.com/en/">
-                    <img className="w-20 h-20 mt-3" src={smartNorwayLogo} alt="smartNorwayLogo" />
-                </Link>
-            </div>
-            <div className="w-full flex flex-col md:w-1/3">
-                <div className="flex justify-center items-center gap-10 mt-10">
-                    <Link to="https://pudoos.bg/">
-                        <img className="w-20" src={okolnaSreda} alt="okolnaSreda" />
-                    </Link>
-                    <h2>{t('home.program')}</h2>
-                    <Link to="https://www.eeagrants.bg/bg/2009-2014/%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%b8">
-                        <img className="w-20" src={norwayLogo} alt="norwayLogo" />
-                    </Link>
-                </div>
-                <div className="mx-auto mt-5">
-                    <p>{t('home.programDesc')}</p>
-                </div>
-                <div>
-                    <h2 className="font-bold text-lg mt-4">
-                        <Trans i18nKey="home.workTogether">
-                            Работим заедно за
-                            <span className="text-green-600">по-зелена</span>
-                            <span className="text-red-600">по-конкурентна</span>
-                            <span className="text-blue-600">по-приобщаваща</span> Европа!
-                        </Trans>
-                    </h2>
-                </div>
-                <Link to="https://www.eeagrants.bg">
-                    <p className="text-blue-600 cursor-pointer mt-4">https://www.eeagrants.bg</p>
-                </Link>
-            </div>
 
+                    </div>
+                </div>
+            </div>
+            {/* SubHeroEnd */}
+            <Partners />
+            
             {showModal && (
-
                 <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-filter backdrop-blur-sm bg-opacity-50 bg-gray-800">
                     <div className="bg-white rounded-lg md:py-20 px-20 lg: py-10 relative" ref={modalRef}>
                         <img className="mx-auto" src={BlackSeaLogo} alt="" />

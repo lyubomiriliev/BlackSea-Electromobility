@@ -186,12 +186,12 @@ const Stations = () => {
     return (
         <div className="w-full bg-white py-20 px-4">
             <div className="flex justify-center mb-5 relative">
-                <h1 className="text-2xl font-bold font-heading mt-10">{t('stations.title')}</h1>
+                <h1 className="text-2xl md:text-4xl font-bold font-heading mt-10">{t('stations.title')}</h1>
             </div>
-            <div className="xl:w-1/3 mx-auto md:w-2/3 relative flex">
-                <FaSearch className=" mt-3 text-primary scale-150" />
+            <div className="xl:w-1/3 mx-auto md:w-2/3 relative flex items-center">
+                <FaSearch className="absolute left-4 top-3 text-primary scale-125" />
                 <input
-                    className="input-field border font-body bg-white border-gray-300 rounded-md mb-5 ml-3 px-4 py-2 w-full focus:outline-none focus:border-primary"
+                    className="input-field border font-body bg-white border-gray-300 rounded-md mb-5 pl-12 pr-4 py-2 w-full focus:outline-none focus:border-primary shadow-md"
                     type="search"
                     name="search"
                     value={inputs.search}
@@ -200,7 +200,7 @@ const Stations = () => {
                     onBlur={() => setSearchFocused(false)}
                 />
                 <label
-                    className={`absolute left-10 font-body -mt-3 transition-all ml-3 duration-300 ${isSearchFocused || inputs.search ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-0 -mt-3 translate-y-5 text-gray-400'
+                    className={`absolute left-12 bottom-12 font-body -mt-3 transition-all ml-3 duration-300 ${isSearchFocused || inputs.search ? 'top-1 text-sm bg-white px-2 text-primary' : 'left-0 -mt-3 translate-y-5 text-gray-400'
                         }`}
                     htmlFor="search"
                 >
