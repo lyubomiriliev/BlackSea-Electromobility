@@ -43,7 +43,8 @@ import Map from "../assets/homeImages/map.png";
 import Type from "../assets/homeImages/type.png";
 
 import Type2 from "../assets/type2png.png";
-import stationImage from "../assets/stationImage.svg"
+import stationImage from "../assets/stationImage.svg";
+import heroSectionLogo from "../assets/BlackSea-LogoSVG3.svg";
 
 export {
   logoBlackSea,
@@ -86,5 +87,6 @@ export {
   Map,
   Type,
   Type2,
-  stationImage
+  stationImage,
+  heroSectionLogo,
 };
